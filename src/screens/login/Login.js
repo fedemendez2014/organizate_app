@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity } from "react-native";
+import { GlobalInput, GlobalInputEmail } from '../../components/shared/GlobalInput';
+import { GlobalButton } from '../../components/shared/GlobalButton';
 
 export default class Login extends Component {
+    constructor(props){
+        super(props);
+    }
+
     render() {
         return (
             <View style={styles.MainContainer}>
@@ -15,26 +21,16 @@ export default class Login extends Component {
                     />
                 </View>
                 <View style={{ backgroundColor: 'rgba(250, 250, 250, 0.75)', width: '100%', marginTop: 20, padding: 15 }}>
-                    <Text style={{ paddingStart: 15 }}>Email</Text>
-                    <TextInput style={{
-                        color: 'black', backgroundColor: 'white', height: 40, borderWidth: 1, borderRadius: 15,
-                        paddingStart: 15, marginBottom: 15
-                    }} placeholder="Email" />
-                    <Text style={{ paddingStart: 15 }}>Contraseña</Text>
-                    <TextInput style={{
-                        color: 'black', backgroundColor: 'white',height: 40, borderWidth: 1, borderRadius: 15,
-                        paddingStart: 15
-                    }} placeholder="Contraseña" />
+                    <GlobalInputEmail title="Email" ph="Email" />
+                    <GlobalInput title="Contraseña" ph="Contraseña" />
                     <View style={{ alignItems: 'center' }}>
-                        <TouchableOpacity style={{
-                            marginTop: 15, borderRadius: 15, alignContent: 'center', justifyContent: 'center',
-                            alignItems: 'center', height: 40, backgroundColor: '#FFBC17', width: '30%'
-                        }}>
-                            <Text>INGRESAR</Text>
+                        <GlobalButton title="Ingresar" 
+                            press={() => {this.props.navigation.navigate('Home')}} />
+                        <TouchableOpacity onPress={() => {this.props.navigation.navigate('Register')}}>
+                            <Text style={{ marginTop: 15 }}>
+                                ¿No tienes cuenta? Registrate
+                            </Text>
                         </TouchableOpacity>
-                        <Text style={{ marginTop: 15 }}>
-                            ¿No tienes cuenta? Registrate
-                        </Text>
                         <Text style={{ marginTop: 5 }}>
                             Olvide mi contraseña
                         </Text>
