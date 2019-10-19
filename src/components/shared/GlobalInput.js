@@ -5,9 +5,9 @@ export const GlobalInput = (props) => {
     return (
         <View>
             <Text style={styles.textTitle}>{props.title}</Text>
-            <TextInput style={styles.textInput} placeholder={props.ph} 
+            <TextInput style={styles.textInput} placeholder={props.ph}
                 onChangeText={props.change} autoCapitalize="none"
-                value={props.value}/>
+                value={props.value} />
         </View>
     );
 }
@@ -16,9 +16,20 @@ export const GlobalInputEmail = (props) => {
     return (
         <View>
             <Text style={styles.textTitle}>{props.title}</Text>
-            <TextInput style={styles.textInput} placeholder={props.ph} 
+            <TextInput style={styles.textInput} placeholder={props.ph}
                 onChangeText={props.change} autoCapitalize="none"
-                keyboardType={'email-address'} value={props.value}/>
+                keyboardType={'email-address'} value={props.value} />
+        </View>
+    );
+}
+
+export const GlobalInputPassword = (props) => {
+    return (
+        <View>
+            <Text style={styles.textTitle}>{props.title}</Text>
+            <TextInput style={styles.textInput} placeholder={props.ph}
+                onChangeText={props.change} autoCapitalize="none"
+                value={props.value} secureTextEntry={true} />
         </View>
     );
 }
@@ -29,12 +40,12 @@ const styles = StyleSheet.create(
             paddingStart: 15
         },
         textInput: {
-            color: 'black', 
-            backgroundColor: 'white', 
-            height: 40, 
-            borderWidth: 1, 
+            color: 'black',
+            backgroundColor: 'white',
+            height: 40,
+            borderWidth: 1,
             borderRadius: 15,
-            paddingStart: 15, 
+            paddingStart: 15,
             marginBottom: 15
         }
     });

@@ -11,5 +11,9 @@ export const GlobalStyles = StyleSheet.create(
             width: '100%', 
             marginTop: 20, 
             padding: 15
+        },
+        textError: {
+            color: 'red',
+            textAlign: 'center'
         }
     });

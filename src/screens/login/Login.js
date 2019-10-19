@@ -1,11 +1,45 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity } from "react-native";
-import { GlobalInput, GlobalInputEmail } from '../../components/shared/GlobalInput';
+import { GlobalInput, GlobalInputEmail, GlobalInputPassword } from '../../components/shared/GlobalInput';
 import { GlobalButton } from '../../components/shared/GlobalButton';
+import { GlobalStyles } from '../../Styles';
 
 export default class Login extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
+        this.state = {
+            email: '',
+            password: '',
+            errorLogin: '',
+            loading: false
+        }
+    }
+
+    login = async () => {
+        await this.setState({ loading: true });
+        if (await this.validate()) {
+
+        }
+        else {
+            await this.setState({ loading: false });
+        }
+    }
+
+    validate = async () => {
+        await this.setState({ errorLogin: '' });
+        if ('' === this.state.email) {
+            await this.setState({ errorLogin: 'Debe ingresar el email' });
+            return false;
+        }
+        if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(this.state.email)) {
+            await this.setState({ errorLogin: 'El email no tiene un formato válido' });
+            return false;
+        }
+        if ('' === this.state.password) {
+            await this.setState({ errorLogin: 'Debe ingresar la contraseña' });
+            return false;
+        }
+        return true;
     }
 
     render() {
@@ -21,12 +55,15 @@ export default class Login extends Component {
                     />
                 </View>
                 <View style={{ backgroundColor: 'rgba(250, 250, 250, 0.75)', width: '100%', marginTop: 20, padding: 15 }}>
-                    <GlobalInputEmail title="Email" ph="Email" />
-                    <GlobalInput title="Contraseña" ph="Contraseña" />
+                    <GlobalInputEmail title="Email" ph="Email"
+                        value={this.state.email} change={text => this.setState({ email: text })} />
+                    <GlobalInputPassword title="Contraseña" ph="Contraseña"
+                        value={this.state.password} change={text => this.setState({ password: text })} />
                     <View style={{ alignItems: 'center' }}>
-                        <GlobalButton title="Ingresar" 
-                            press={() => {this.props.navigation.navigate('Home')}} />
-                        <TouchableOpacity onPress={() => {this.props.navigation.navigate('Register')}}>
+                        <Text style={GlobalStyles.textError}>{this.state.errorLogin}</Text>
+                        <GlobalButton title="Ingresar"
+                            press={() => { this.login() }} loading={this.state.loading} />
+                        <TouchableOpacity onPress={() => { this.props.navigation.navigate('Register') }}>
                             <Text style={{ marginTop: 15 }}>
                                 ¿No tienes cuenta? Registrate
                             </Text>
