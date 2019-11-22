@@ -3,8 +3,10 @@ import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity } from "reac
 import { GlobalInput, GlobalInputEmail, GlobalInputPassword } from '../../components/shared/GlobalInput';
 import { GlobalButton } from '../../components/shared/GlobalButton';
 import { GlobalStyles } from '../../Styles';
+import { connect } from 'react-redux';
+import { actionLogin } from '../../redux/actions/AccountActions';
 
-export default class Login extends Component {
+class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -18,11 +20,14 @@ export default class Login extends Component {
     login = async () => {
         await this.setState({ loading: true });
         if (await this.validate()) {
-
+            this.props.login({
+                email: this.state.email,
+                password: this.state.password
+            })
         }
-        else {
+        else {
             await this.setState({ loading: false });
-        }
+        } 
     }
 
     validate = async () => {
@@ -62,7 +67,7 @@ export default class Login extends Component {
                     <View style={{ alignItems: 'center' }}>
                         <Text style={GlobalStyles.textError}>{this.state.errorLogin}</Text>
                         <GlobalButton title="Ingresar"
-                            press={() => { this.login() }} loading={this.state.loading} />
+                            press={() => { this.login() }} loading={false} />
                         <TouchableOpacity onPress={() => { this.props.navigation.navigate('Register') }}>
                             <Text style={{ marginTop: 15 }}>
                                 ¿No tienes cuenta? Registrate
@@ -88,3 +93,11 @@ const styles = StyleSheet.create(
             backgroundColor: '#FFBC17',
         }
     });
+
+const mapDispatchToProps = dispatch => ({
+    login: (data) => {
+        dispatch(actionLogin(data));
+    }
+})
+
+export default connect(null, mapDispatchToProps)(Login);

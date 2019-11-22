@@ -1,4 +1,4 @@
-import { Constants } from '../../Constants';
+import { Constants, ActionsConstants } from '../../Constants';
 import { login } from '../services/AccountServices';
 
 /**
@@ -9,11 +9,24 @@ export const actionLogin = (data) => {
         const oResult = login(data);
         oResult.then(
             oSuccess => {
-                console.log(oSuccess)
+                dispatch(actionLoginSuccess(oSuccess));
             },
             oError => {
-                console.log(oError)
+                if (oError.response.status === 401) {
+                    //logout();
+                }
+                else {
+                    dispatch(actionLoginSuccess(oError.response.data));
+                }
             }
         )
     }
 }
+
+/**
+ * 
+ */
+export const actionLoginSuccess = (data) => ({
+    type: ActionsConstants.LOGIN_SUCCESS,
+    data: data
+})
