@@ -1,5 +1,6 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import NavigationGuest from "./Guest";
+import NavigationLogged from "./Logged.js"
 import { connect } from 'react-redux';
 
 class SelectRoutes extends Component {
@@ -8,9 +9,11 @@ class SelectRoutes extends Component {
     }
 
     render() {
-        console.log(this.props.propsLogin)
-        return(
-            <NavigationGuest />
+        return (
+            undefined !== this.props.propsLogin.session ?
+                <NavigationLogged />
+                :
+                <NavigationLogged />
         );
     }
 }

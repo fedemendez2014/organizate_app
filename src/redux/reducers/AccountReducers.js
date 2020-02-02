@@ -5,7 +5,6 @@ export const reducerRegister = (state = {}, action) => {
 };
 
 export const reducerLogin = (state = {}, action) => {
-    console.log(action)
     switch(action.type){
         case ActionsConstants.LOGIN_SUCCESS:
             return {...state, session: action.data};

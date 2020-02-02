@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 
-export default class ListCustomer extends Component {
+export default class ListIncomeEgress extends Component {
     constructor(props){
         super(props);
     }
@@ -9,7 +9,7 @@ export default class ListCustomer extends Component {
     render(){
         return(
             <View>
-                <Text>CUSTOMER</Text>
+                <Text>ListIncomeEgress</Text>
             </View>
         );
     }
