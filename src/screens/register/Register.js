@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { GlobalButton } from '../../components/shared/GlobalButton';
 import { GlobalInput, GlobalInputEmail, GlobalInputPassword } from '../../components/shared/GlobalInput';
 import { GlobalStyles } from '../../Styles';

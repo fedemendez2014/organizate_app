@@ -4,7 +4,10 @@ import { View, Text, StyleSheet, TextInput } from "react-native";
 export const GlobalInput = (props) => {
     return (
         <View>
-            <Text style={styles.textTitle}>{props.title}</Text>
+            {
+                undefined !== props.title &&
+                <Text style={styles.textTitle}>{props.title}</Text>
+            }
             <TextInput style={styles.textInput} placeholder={props.ph}
                 onChangeText={props.change} autoCapitalize="none"
                 value={props.value} />
