@@ -60,10 +60,12 @@ class Login extends Component {
                     />
                 </View>
                 <View style={{ backgroundColor: 'rgba(250, 250, 250, 0.75)', width: '100%', marginTop: 20, padding: 15 }}>
-                    <GlobalInputEmail title="Email" ph="Email"
-                        value={this.state.email} change={text => this.setState({ email: text })} />
-                    <GlobalInputPassword title="Contraseña" ph="Contraseña"
-                        value={this.state.password} change={text => this.setState({ password: text })} />
+                    <GlobalInputEmail title="Email" ph="Email" value="f@f.com"
+                        //value={this.state.email} 
+                        change={text => this.setState({ email: text })} />
+                    <GlobalInputPassword title="Contraseña" ph="Contraseña" value="123"
+                        //value={this.state.password} 
+                        change={text => this.setState({ password: text })} />
                     <View style={{ alignItems: 'center' }}>
                         <Text style={GlobalStyles.textError}>{this.state.errorLogin}</Text>
                         <GlobalButton title="Ingresar"

@@ -54,15 +54,18 @@ const NavigationLogged = createStackNavigator(
         },
         AddEditService: {
             screen: AddEditService,
-            navigationOptions: ({ navigation }) => ({
-                headerTitle: "Servicios",
-                headerRight:
-                    <TouchableOpacity onPress={() => navigation.navigate('AddEditService')}
-                        style={{ paddingRight: 15, flexDirection: 'row' }}>
-                        <Icon name="md-checkmark" size={18} />
-                        <Text style={{ fontSize: 16, marginLeft: 2 }}>Save</Text>
-                    </TouchableOpacity>
-            })
+            navigationOptions: ({ navigation }) => {
+                const { params = {} } = navigation.state;
+                return {
+                    headerTitle: "Servicios",
+                    headerRight:
+                        <TouchableOpacity onPress={() => params.functionService()}
+                            style={{ paddingRight: 15, flexDirection: 'row' }}>
+                            <Icon name="md-checkmark" size={18} />
+                            <Text style={{ fontSize: 16, marginLeft: 2 }}>Save</Text>
+                        </TouchableOpacity>
+                }
+            }
         },
         ListIncomeEgress: {
             screen: ListIncomeEgress,

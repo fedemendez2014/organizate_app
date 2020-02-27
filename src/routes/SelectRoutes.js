@@ -10,10 +10,10 @@ class SelectRoutes extends Component {
 
     render() {
         return (
-            undefined !== this.props.propsLogin.session ?
+            undefined !== this.props.propsLogin.session && null !== this.props.propsLogin.session ?
                 <NavigationLogged />
                 :
-                <NavigationLogged />
+                <NavigationGuest />
         );
     }
 }
@@ -23,3 +23,4 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps, null)(SelectRoutes);
+

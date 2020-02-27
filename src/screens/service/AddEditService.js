@@ -5,14 +5,31 @@ import { GlobalInput } from '../../components/shared/GlobalInput';
 import { LoadingSpinner } from '../../components/shared/LoadingSpinner';
 import { connect } from 'react-redux';
 import { actionAddService } from '../../redux/actions/ServiceActions';
+import ServiceModel from '../../models/ServiceModel';
 
 class AddEditService extends Component {
     constructor(props) {
         super(props);
         this.state = {
             search: '',
-            loading: false
+            loading: false,
+            service: new ServiceModel()
         }
+    }
+
+    componentDidMount = () => {
+        console.log("sa")
+        this.props.navigation.setParams({ functionService: this.addService });
+    }
+
+    addService = async () => {
+        /*await this.setState({
+            loading: true
+        })*/
+        this.props.addService({
+            ...this.state.service,
+            token: this.props.propsLogin.session.remember_token
+        })
     }
 
     render() {
@@ -20,14 +37,14 @@ class AddEditService extends Component {
             <View style={{ flex: 1 }}>
                 <SubHead title="Nuevo servicio" />
                 <ScrollView style={{ padding: 10, paddingTop: 20 }}>
-                    <GlobalInput ph="Buscar" change={text => this.setState({ name: text })}
-                        value={this.state.search} title="Nombre" />
-                    <GlobalInput ph="Buscar" change={text => this.setState({ name: text })}
-                        value={this.state.search} title="Descripción" />
-                    <GlobalInput ph="Buscar" change={text => this.setState({ name: text })}
-                        value={this.state.search} title="Precio" />
-                    <GlobalInput ph="Buscar" change={text => this.setState({ name: text })}
-                        value={this.state.search} title="Observaciones" />
+                    <GlobalInput ph="Nombre" change={text => this.setState({ service: { ...this.state.service, name: text } })}
+                        value={this.state.service.name} title="Nombre" />
+                    <GlobalInput ph="Descripción" change={text => this.setState({ service: { ...this.state.service, description: text } })}
+                        value={this.state.service.description} title="Descripción" />
+                    <GlobalInput ph="Precio" change={text => this.setState({ service: { ...this.state.service, price: text } })}
+                        value={this.state.service.price} title="Precio" />
+                    <GlobalInput ph="Observaciones" change={text => this.setState({ service: { ...this.state.service, observations: text } })}
+                        value={this.state.service.observations} title="Observaciones" />
                 </ScrollView>
                 <LoadingSpinner visible={this.state.loading} />
             </View>
