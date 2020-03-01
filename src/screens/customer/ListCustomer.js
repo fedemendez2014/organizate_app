@@ -55,7 +55,8 @@ class ListCustomer extends Component {
                                 keyExtractor={(item, index) => index.toString()}
                                 extraData={this.state.refresh}
                                 renderItem={({ item }) =>
-                                    <TouchableOpacity>
+                                    <TouchableOpacity
+                                        onPress={() => this.props.navigation.navigate('AddEditCustomer', { customer: item })}>
                                         <View style={{
                                             borderTopWidth: 1, borderBottomWidth: 1, padding: 10,
                                             flexDirection: 'row', marginBottom: 5
