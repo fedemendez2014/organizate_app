@@ -10,7 +10,7 @@ export const GlobalInput = (props) => {
             }
             <TextInput style={styles.textInput} placeholder={props.ph}
                 onChangeText={props.change} autoCapitalize="none"
-                value={props.value} />
+                value={props.value} keyboardType={props.type && 'numeric'} />
         </View>
     );
 }

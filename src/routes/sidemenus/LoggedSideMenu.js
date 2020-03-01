@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'rea
 import { PlaceholderColor, SignUpColor } from '../../Styles';
 import Icon from "react-native-vector-icons/Ionicons";
 import { connect } from "react-redux";
+import { actionUserSessionClose } from '../../redux/actions/AccountActions';
 
 class LoggedSideMenu extends Component {
     constructor(props) {
@@ -68,7 +69,7 @@ class LoggedSideMenu extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.viewTouchable}>
-                    <TouchableOpacity onPress={() => { }}>
+                    <TouchableOpacity onPress={() => this.props.logout()}>
                         <View style={styles.viewText}>
                             <Icon name="ios-log-in" size={22} color={SignUpColor} />
                             <Text style={styles.textButton}>Logout</Text>
@@ -108,4 +109,10 @@ const styles = StyleSheet.create({
     }
 });
 
-export default connect(null, null)(LoggedSideMenu);
+const mapDispatchToProps = dispatch => ({
+    logout: () => {
+        dispatch(actionUserSessionClose());
+    }
+})
+
+export default connect(null, mapDispatchToProps)(LoggedSideMenu);

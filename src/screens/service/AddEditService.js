@@ -4,7 +4,7 @@ import { SubHead } from '../../components/shared/SubHead';
 import { GlobalInput } from '../../components/shared/GlobalInput';
 import { LoadingSpinner } from '../../components/shared/LoadingSpinner';
 import { connect } from 'react-redux';
-import { actionAddService } from '../../redux/actions/ServiceActions';
+import { actionAddService, actionUpdateService } from '../../redux/actions/ServiceActions';
 import ServiceModel from '../../models/ServiceModel';
 
 class AddEditService extends Component {
@@ -17,18 +17,59 @@ class AddEditService extends Component {
         }
     }
 
-    componentDidMount = () => {
-        console.log("sa")
-        this.props.navigation.setParams({ functionService: this.addService });
+    componentDidMount = async () => {
+        if (null !== this.props.navigation.getParam('service', null)) {
+            var service = this.props.navigation.getParam('service', null);
+            await this.setState({
+                service: {
+                    id: service.id,
+                    name: service.name,
+                    description: service.description,
+                    price: service.price.toString(),
+                    observations: service.observations
+                }
+            })
+            this.props.navigation.setParams({ functionService: this.updateService });
+        }
+        else {
+            this.props.navigation.setParams({ functionService: this.addService });
+        }
     }
 
     addService = async () => {
-        /*await this.setState({
+        await this.setState({
             loading: true
-        })*/
+        })
         this.props.addService({
             ...this.state.service,
-            token: this.props.propsLogin.session.remember_token
+            token: this.props.propsLogin.session.account.remember_token
+        })
+    }
+
+    updateService = async () => {
+        await this.setState({
+            loading: true
+        })
+        this.props.updateService({
+            ...this.state.service,
+            token: this.props.propsLogin.session.account.remember_token
+        })
+    }
+
+    componentWillReceiveProps = async (nextProps) => {
+        if (nextProps.propsService !== this.props.propsService && null !== nextProps.propsService.statusAdd
+            && nextProps.propsService.statusAdd) {
+            await this.setState({
+                service: new ServiceModel()
+            })
+            this.props.navigation.navigate('ListService')
+        }
+        if (nextProps.propsService !== this.props.propsService && null !== nextProps.propsService.statusUpdate
+            && nextProps.propsService.statusUpdate) {
+           //SHOW TOAST SOLAMENTE
+        }
+        await this.setState({
+            loading: false
         })
     }
 
@@ -42,7 +83,7 @@ class AddEditService extends Component {
                     <GlobalInput ph="Descripción" change={text => this.setState({ service: { ...this.state.service, description: text } })}
                         value={this.state.service.description} title="Descripción" />
                     <GlobalInput ph="Precio" change={text => this.setState({ service: { ...this.state.service, price: text } })}
-                        value={this.state.service.price} title="Precio" />
+                        value={this.state.service.price} title="Precio" type='number' />
                     <GlobalInput ph="Observaciones" change={text => this.setState({ service: { ...this.state.service, observations: text } })}
                         value={this.state.service.observations} title="Observaciones" />
                 </ScrollView>
@@ -53,7 +94,8 @@ class AddEditService extends Component {
 }
 
 const mapStateToProps = state => ({
-    propsLogin: state.reducerLogin
+    propsLogin: state.reducerLogin,
+    propsService: state.reducerService
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -61,7 +103,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(actionAddService(data));
     },
     updateService: (data) => {
-        dispatch();
+        dispatch(actionUpdateService(data));
     }
 })
 

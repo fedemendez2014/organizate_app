@@ -1,15 +1,37 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
 import { SubHead } from '../../components/shared/SubHead';
 import { GlobalInput } from '../../components/shared/GlobalInput';
 import Icon from "react-native-vector-icons/Ionicons";
+import { connect } from 'react-redux';
+import { actionGetAllService } from '../../redux/actions/ServiceActions';
+import { LoadingSpinner } from '../../components/shared/LoadingSpinner';
 
-export default class ListService extends Component {
+class ListService extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            search: ''
+            search: '',
+            loading: false,
+            refresh: false
         }
+    }
+
+    componentDidMount = async () => {
+        await this.setState({
+            loading: true
+        })
+        this.props.getAllServices({
+            token: this.props.propsLogin.session.account.remember_token,
+            page: 0
+        })
+    }
+
+    componentWillReceiveProps = async (nextProps) => {
+        await this.setState({
+            loading: false,
+            refresh: !this.state.refresh
+        })
     }
 
     render() {
@@ -22,44 +44,61 @@ export default class ListService extends Component {
                 </View>
                 <ScrollView style={{ height: '100%' }}>
                     <View>
-                        <TouchableOpacity>
-                            <View style={{
-                                borderTopWidth: 1, borderBottomWidth: 1, padding: 10,
-                                flexDirection: 'row', marginBottom: 5
-                            }}>
-                                <View style={{ width: '90%' }}>
-                                    <View style={{ flexDirection: 'row', marginBottom: 10 }}>
-                                        <Text>Corte de pelo</Text>
-                                    </View>
-                                    <View style={{ flexDirection: 'row' }}>
-                                        <Text style={{ width: '60%' }}>Corte de pelo para hombre</Text>
-                                        <Text style={{ width: '40%', textAlign: 'right' }}>$200</Text>
-                                    </View>
-                                </View>
-                                <View style={{ width: '10%', justifyContent: 'center', alignItems: 'flex-end' }}>
-                                    <Icon size={22} name="ios-arrow-forward" />
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <View style={{ borderTopWidth: 1, borderBottomWidth: 1, padding: 10, flexDirection: 'row' }}>
-                                <View style={{ width: '90%' }}>
-                                    <View style={{ flexDirection: 'row', marginBottom: 10 }}>
-                                        <Text>Barba recorte</Text>
-                                    </View>
-                                    <View style={{ flexDirection: 'row' }}>
-                                        <Text style={{ width: '60%' }}>Recorte de barba</Text>
-                                        <Text style={{ width: '40%', textAlign: 'right' }}>$250</Text>
-                                    </View>
-                                </View>
-                                <View style={{ width: '10%', justifyContent: 'center', alignItems: 'flex-end' }}>
-                                    <Icon size={22} name="ios-arrow-forward" />
-                                </View>
-                            </View>
-                        </TouchableOpacity>
+                        {
+                            undefined !== this.props.propsService.services &&
+                            <FlatList
+                                data={this.props.propsService.services.data}
+                                keyExtractor={(item, index) => index.toString()}
+                                extraData={this.state.refresh}
+                                renderItem={({ item }) =>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('AddEditService', { service: item })}>
+                                        <View style={styles.viewList}>
+                                            <View style={{ width: '90%' }}>
+                                                <View style={{ flexDirection: 'row', marginBottom: 10 }}>
+                                                    <Text style={{ fontWeight: 'bold' }}>{item.name}</Text>
+                                                </View>
+                                                <View style={{ flexDirection: 'row' }}>
+                                                    <Text style={{ width: '60%' }}>{item.description}</Text>
+                                                    <Text style={styles.textPrice}>${item.price}</Text>
+                                                </View>
+                                            </View>
+                                            <View style={styles.iconNext}>
+                                                <Icon size={22} name="ios-arrow-forward" />
+                                            </View>
+                                        </View>
+                                    </TouchableOpacity>
+                                } />
+                        }
                     </View>
                 </ScrollView>
+                <LoadingSpinner visible={this.state.loading} />
             </View>
         );
     }
 }
+
+const styles = StyleSheet.create({
+    viewList: {
+        borderTopWidth: 1, borderBottomWidth: 1, padding: 10,
+        flexDirection: 'row', marginBottom: 5
+    },
+    textPrice: {
+        width: '40%', textAlign: 'right'
+    },
+    iconNext: {
+        width: '10%', justifyContent: 'center', alignItems: 'flex-end'
+    }
+})
+
+const mapStateToProps = state => ({
+    propsLogin: state.reducerLogin,
+    propsService: state.reducerService
+})
+
+const mapDispatchToProps = dispatch => ({
+    getAllServices: (data) => {
+        dispatch(actionGetAllService(data));
+    }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListService);

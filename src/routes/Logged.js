@@ -63,7 +63,11 @@ const NavigationLogged = createStackNavigator(
                             style={{ paddingRight: 15, flexDirection: 'row' }}>
                             <Icon name="md-checkmark" size={18} />
                             <Text style={{ fontSize: 16, marginLeft: 2 }}>Save</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity>,
+                    headerLeft: <Icon name={Platform.OS === 'android' ? "md-arrow-back" : "ios-arrow-back"}
+                        color="Black" size={26}
+                        onPress={() => { navigation.goBack() }}
+                        style={{ paddingLeft: 15 }} />
                 }
             }
         },

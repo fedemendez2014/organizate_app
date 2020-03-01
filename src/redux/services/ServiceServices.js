@@ -21,12 +21,13 @@ export const AddService = (data) => {
 }
 
 export const UpdateService = (data) => {
+    console.log(data)
     let config = {
         headers: {
             Authorization: data.token,
         }
     }
-    return axios.put(Constants.URLSERVICE + 'service/' + data.serviceId,
+    return axios.put(Constants.URLSERVICE + 'service/' + data.id,
         {
             name: data.name,
             description: data.description,

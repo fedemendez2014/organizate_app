@@ -1,16 +1,83 @@
 import { ActionsConstants } from '../../Constants';
-import { AddService } from '../services/ServiceServices';
+import { AddService, GetAllService, UpdateService } from '../services/ServiceServices';
 
 export const actionAddService = (data) => {
     return dispatch => {
         const oResult = AddService(data);
         oResult.then(
             oSuccess => {
-                console.log(oSuccess)
+                dispatch(actionAddServiceSuccess());
             },
             oError => {
-                console.log(oError)
+                dispatch(actionAddServiceError({
+                    messageError: oError.response.data
+                }))
             }
         )
     }
 }
+
+export const actionAddServiceSuccess = () => ({
+    type: ActionsConstants.ADD_SERVICE_SUCCESS
+})
+
+export const actionAddServiceError = (data) => ({
+    type: ActionsConstants.ADD_SERVICE_ERROR,
+    data: data
+})
+
+export const actionUpdateService = (data) => {
+    return dispatch => {
+        const oResult = UpdateService(data);
+        oResult.then(
+            oSuccess => {
+                console.log(oSuccess)
+                dispatch(actionUpdateServiceSuccess());
+            },
+            oError => {
+                console.log(oError)
+
+                dispatch(actionUpdateServiceError({
+                    messageError: oError.response.data
+                }))
+            }
+        )
+    }
+}
+
+export const actionUpdateServiceSuccess = () => ({
+    type: ActionsConstants.UPDATE_SERVICE_SUCCESS
+})
+
+export const actionUpdateServiceError = (data) => ({
+    type: ActionsConstants.UPDATE_SERVICE_ERROR,
+    data: data
+})
+
+export const actionGetAllService = (data) => {
+    return dispatch => {
+        const oResult = GetAllService(data);
+        oResult.then(
+            oSuccess => {
+                dispatch(actionGetAllServiceSuccess({
+                    services: oSuccess.services
+                }))
+            },
+            oError => {
+                dispatch(actionGetAllServiceError({
+                    messageError: oError.response.data
+                }))
+            }
+        )
+    }
+}
+
+export const actionGetAllServiceSuccess = (data) => ({
+    type: ActionsConstants.GET_ALL_SERVICE_SUCCESS,
+    data: data
+})
+
+export const actionGetAllServiceError = (data) => ({
+    type: ActionsConstants.GET_ALL_SERVICE_ERROR,
+    data: data
+})
