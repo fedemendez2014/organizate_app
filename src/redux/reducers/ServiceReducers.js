@@ -7,6 +7,7 @@ const initalStateService = {
     statusAdd: null,
     statusGet: null,
     statusGetAll: null,
+    statusDelete: null,
     messageError: ''
 };
 
@@ -28,6 +29,10 @@ export const reducerService = (state = {}, action) => {
             return { ...state, statusGetAll: true, services: action.data.services };
         case ActionsConstants.GET_ALL_SERVICE_ERROR:
             return { ...state, statusGetAll: false, messageError: action.data.messageError };
+        case ActionsConstants.DELETE_SERVICE_SUCCESS:
+            return { ...initalStateService, statusDelete: true }
+        case ActionsConstants.DELETE_SERVICE_ERROR:
+            return { ...initalStateService, statusDelete: false, messageError: action.data.messageError }
         default:
             return state;
     }

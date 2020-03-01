@@ -1,6 +1,9 @@
 import { ActionsConstants } from '../../Constants';
 import { AddService, GetAllService, UpdateService } from '../services/ServiceServices';
 
+/**
+ * ADD SERVICES 
+ */
 export const actionAddService = (data) => {
     return dispatch => {
         const oResult = AddService(data);
@@ -26,17 +29,17 @@ export const actionAddServiceError = (data) => ({
     data: data
 })
 
+/**
+ * UPDATE SERVICES 
+ */
 export const actionUpdateService = (data) => {
     return dispatch => {
         const oResult = UpdateService(data);
         oResult.then(
             oSuccess => {
-                console.log(oSuccess)
                 dispatch(actionUpdateServiceSuccess());
             },
             oError => {
-                console.log(oError)
-
                 dispatch(actionUpdateServiceError({
                     messageError: oError.response.data
                 }))
@@ -54,6 +57,9 @@ export const actionUpdateServiceError = (data) => ({
     data: data
 })
 
+/**
+ * GET ALL SERVICES 
+ */
 export const actionGetAllService = (data) => {
     return dispatch => {
         const oResult = GetAllService(data);

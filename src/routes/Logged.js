@@ -31,15 +31,22 @@ const NavigationLogged = createStackNavigator(
         },
         AddEditCustomer: {
             screen: AddEditCustomer,
-            navigationOptions: ({ navigation }) => ({
-                headerTitle: "Clientes",
-                headerRight:
-                    <TouchableOpacity onPress={() => navigation.navigate('AddEditCustomer')}
-                        style={{ paddingRight: 15, flexDirection: 'row' }}>
-                        <Icon name="md-checkmark" size={18} />
-                        <Text style={{ fontSize: 16, marginLeft: 2 }}>Save</Text>
-                    </TouchableOpacity>
-            })
+            navigationOptions: ({ navigation }) => {
+                const { params = {} } = navigation.state;
+                return {
+                    headerTitle: "Clientes",
+                    headerRight:
+                        <TouchableOpacity onPress={() => params.functionCustomer()}
+                            style={{ paddingRight: 15, flexDirection: 'row' }}>
+                            <Icon name="md-checkmark" size={18} />
+                            <Text style={{ fontSize: 16, marginLeft: 2 }}>Save</Text>
+                        </TouchableOpacity>,
+                    headerLeft: <Icon name={Platform.OS === 'android' ? "md-arrow-back" : "ios-arrow-back"}
+                        color="#000" size={26}
+                        onPress={() => { navigation.goBack() }}
+                        style={{ paddingLeft: 15 }} />
+                }
+            }
         },
         ListService: {
             screen: ListService,
@@ -65,7 +72,7 @@ const NavigationLogged = createStackNavigator(
                             <Text style={{ fontSize: 16, marginLeft: 2 }}>Save</Text>
                         </TouchableOpacity>,
                     headerLeft: <Icon name={Platform.OS === 'android' ? "md-arrow-back" : "ios-arrow-back"}
-                        color="Black" size={26}
+                        color="#000" size={26}
                         onPress={() => { navigation.goBack() }}
                         style={{ paddingLeft: 15 }} />
                 }
@@ -84,7 +91,7 @@ const NavigationLogged = createStackNavigator(
         }
     },
     {
-        initialRouteName: 'ListService',
+        initialRouteName: 'ListCustomer',
         defaultNavigationOptions: ({ navigation }) => ({
             headerLeft: <DrawerButton navigation={navigation} />,
             headerTitle: <Image resizeMode='contain'
