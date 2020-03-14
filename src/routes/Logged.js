@@ -8,7 +8,9 @@ import { DrawerButton } from './sidemenus/DrawerButton';
 import { Image, TouchableOpacity, Text } from 'react-native';
 import ListCustomer from '../screens/customer/ListCustomer';
 import ListService from '../screens/service/ListService';
-import ListIncomeEgress from '../screens/income-egress/ListIncomeEgress';
+import ListIncome from '../screens/income-egress/ListIncome';
+import ListEgress from '../screens/income-egress/ListEgress';
+import AddEditIncomeEgress from '../screens/income-egress/AddEditIncomeEgress';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AddEditCustomer from '../screens/customer/AddEditCustomer';
 import AddEditService from '../screens/service/AddEditService';
@@ -78,16 +80,46 @@ const NavigationLogged = createStackNavigator(
                 }
             }
         },
-        ListIncomeEgress: {
-            screen: ListIncomeEgress,
+        ListIncome: {
+            screen: ListIncome,
             navigationOptions: ({ navigation }) => ({
                 headerRight:
-                    <TouchableOpacity onPress={() => navigation.navigate('AddEditCustomer')}
+                    <TouchableOpacity onPress={() => navigation.navigate('AddEditIncomeEgress', { title: 'Agregar ingreso' })}
                         style={{ paddingRight: 15, flexDirection: 'row' }}>
                         <Icon name="md-add" size={18} />
                         <Text style={{ fontSize: 16, marginLeft: 2 }}>Crear</Text>
                     </TouchableOpacity>
             })
+        },
+        ListEgress: {
+            screen: ListEgress,
+            navigationOptions: ({ navigation }) => ({
+                headerRight:
+                    <TouchableOpacity onPress={() => navigation.navigate('AddEditIncomeEgress', { title: 'Agregar egreso' })}
+                        style={{ paddingRight: 15, flexDirection: 'row' }}>
+                        <Icon name="md-add" size={18} />
+                        <Text style={{ fontSize: 16, marginLeft: 2 }}>Crear</Text>
+                    </TouchableOpacity>
+            })
+        },
+        AddEditIncomeEgress: {
+            screen: AddEditIncomeEgress,
+            navigationOptions: ({ navigation }) => {
+                const { params = {} } = navigation.state;
+                return {
+                    headerTitle: params.title,
+                    headerRight:
+                        <TouchableOpacity onPress={() => params.functionService()}
+                            style={{ paddingRight: 15, flexDirection: 'row' }}>
+                            <Icon name="md-checkmark" size={18} />
+                            <Text style={{ fontSize: 16, marginLeft: 2 }}>Save</Text>
+                        </TouchableOpacity>,
+                    headerLeft: <Icon name={Platform.OS === 'android' ? "md-arrow-back" : "ios-arrow-back"}
+                        color="#000" size={26}
+                        onPress={() => { navigation.goBack() }}
+                        style={{ paddingLeft: 15 }} />
+                }
+            }
         }
     },
     {

@@ -53,7 +53,7 @@ class LoggedSideMenu extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.viewTouchable}>
-                    <TouchableOpacity onPress={() => this.navigatePage('ListIncomeEgress')}>
+                    <TouchableOpacity onPress={() => this.navigatePage('ListIncome')}>
                         <View style={styles.viewText}>
                             <Icon name="ios-trending-up" size={22} color={SignUpColor} />
                             <Text style={styles.textButton}>Ingresos</Text>
@@ -61,7 +61,7 @@ class LoggedSideMenu extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.viewTouchable}>
-                    <TouchableOpacity onPress={() => this.navigatePage('ListIncomeEgress')}>
+                    <TouchableOpacity onPress={() => this.navigatePage('ListEgress')}>
                         <View style={styles.viewText}>
                             <Icon name="ios-trending-down" size={22} color={SignUpColor} />
                             <Text style={styles.textButton}>Egresos</Text>
