@@ -17,6 +17,7 @@ export const DrawerButton = (props) => {
 const styles = StyleSheet.create({
     icon: {
         paddingLeft: 15,
-        paddingRight: 15
+        paddingRight: 15,
+        color: '#D30000'
     }
 });

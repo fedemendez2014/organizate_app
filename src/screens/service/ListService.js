@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
-import { SubHead } from '../../components/shared/SubHead';
 import { GlobalInput } from '../../components/shared/GlobalInput';
 import Icon from "react-native-vector-icons/Ionicons";
 import { connect } from 'react-redux';
@@ -37,7 +36,6 @@ class ListService extends Component {
     render() {
         return (
             <View>
-                <SubHead title="Servicios" />
                 <View style={{ padding: 10, width: '100%' }}>
                     <GlobalInput ph="Buscar" change={text => this.setState({ name: text })}
                         value={this.state.search} />

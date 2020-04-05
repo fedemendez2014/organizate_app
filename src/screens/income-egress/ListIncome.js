@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, ScrollView, FlatList, TouchableOpacity } from 'react-native';
-import { SubHead } from '../../components/shared/SubHead';
 import { LoadingSpinner } from '../../components/shared/LoadingSpinner';
 import { GlobalInput } from '../../components/shared/GlobalInput';
 import Icon from "react-native-vector-icons/Ionicons";
@@ -16,7 +15,6 @@ export default class ListIncome extends Component {
     render() {
         return (
             <View>
-                <SubHead title="Listado de ingresos" />
                 <View style={{ padding: 10, width: '100%' }}>
                     <GlobalInput ph="Buscar" change={text => this.setState({ name: text })}
                         value={this.state.search} />

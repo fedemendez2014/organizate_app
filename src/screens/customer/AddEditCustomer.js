@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, ScrollView } from 'react-native';
-import { SubHead } from '../../components/shared/SubHead';
 import { GlobalInput } from '../../components/shared/GlobalInput';
 import { connect } from 'react-redux';
 import { actionAddCustomer } from '../../redux/actions/CustomerActions';
@@ -77,7 +76,6 @@ class AddEditCustomer extends Component {
     render() {
         return (
             <View>
-                <SubHead title="Nuevo cliente" />
                 <ScrollView style={{ padding: 10, paddingTop: 20 }}>
                     <GlobalInput ph="Nombre" value={this.state.customer.name} title="Nombre"
                         change={text => this.setState({ customer: { ...this.state.customer, name: text } })} />

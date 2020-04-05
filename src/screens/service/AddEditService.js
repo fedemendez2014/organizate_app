@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, ScrollView } from 'react-native';
-import { SubHead } from '../../components/shared/SubHead';
 import { GlobalInput } from '../../components/shared/GlobalInput';
 import { LoadingSpinner } from '../../components/shared/LoadingSpinner';
 import { connect } from 'react-redux';
@@ -76,7 +75,6 @@ class AddEditService extends Component {
     render() {
         return (
             <View style={{ flex: 1 }}>
-                <SubHead title="Nuevo servicio" />
                 <ScrollView style={{ padding: 10, paddingTop: 20 }}>
                     <GlobalInput ph="Nombre" change={text => this.setState({ service: { ...this.state.service, name: text } })}
                         value={this.state.service.name} title="Nombre" />

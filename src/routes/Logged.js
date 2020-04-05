@@ -14,6 +14,8 @@ import AddEditIncomeEgress from '../screens/income-egress/AddEditIncomeEgress';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AddEditCustomer from '../screens/customer/AddEditCustomer';
 import AddEditService from '../screens/service/AddEditService';
+import { GlobalPrimaryColor, GlobalSecondColor } from '../Styles';
+import { OptionHeadButton } from '../components/shared/OptionHeadButton';
 
 const NavigationLogged = createStackNavigator(
     {
@@ -24,11 +26,9 @@ const NavigationLogged = createStackNavigator(
             screen: ListCustomer,
             navigationOptions: ({ navigation }) => ({
                 headerRight:
-                    <TouchableOpacity onPress={() => navigation.navigate('AddEditCustomer')}
-                        style={{ paddingRight: 15, flexDirection: 'row' }}>
-                        <Icon name="md-add" size={18} />
-                        <Text style={{ fontSize: 16, marginLeft: 2 }}>Crear</Text>
-                    </TouchableOpacity>
+                    <OptionHeadButton press={() => navigation.navigate('AddEditCustomer')}
+                        icon="add" size={34} />,
+                headerTitle: 'CLIENTES'
             })
         },
         AddEditCustomer: {
@@ -129,7 +129,14 @@ const NavigationLogged = createStackNavigator(
             headerTitle: <Image resizeMode='contain'
                 style={{ marginBottom: 5, height: '100%' }}
                 source={require('../../assets/logoWithOutLetter.png')}
-            />
+            />,
+            headerStyle: {
+                backgroundColor: GlobalPrimaryColor
+            },
+            headerTitleStyle: {
+                color: GlobalSecondColor,
+                fontSize: 18
+            }
         })
     }
 );
