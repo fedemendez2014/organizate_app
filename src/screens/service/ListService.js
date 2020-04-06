@@ -4,7 +4,7 @@ import { GlobalInput } from '../../components/shared/GlobalInput';
 import Icon from "react-native-vector-icons/Ionicons";
 import { connect } from 'react-redux';
 import { actionGetAllService } from '../../redux/actions/ServiceActions';
-import { LoadingSpinner } from '../../components/shared/LoadingSpinner';
+import LoadingSpinner from '../../components/shared/LoadingSpinner';
 
 class ListService extends Component {
     constructor(props) {
