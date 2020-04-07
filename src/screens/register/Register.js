@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet } from "react-native";
 import { GlobalButton } from '../../components/shared/GlobalButton';
 import { GlobalInput, GlobalInputEmail, GlobalInputPassword } from '../../components/shared/GlobalInput';
-import { GlobalStyles } from '../../Styles';
+import { GlobalStyles, GlobalPrimaryColor, GlobalSecondColor } from '../../Styles';
 import { connect } from "react-redux";
 
 class Register extends Component {
@@ -66,26 +66,23 @@ class Register extends Component {
         return (
             <View style={styles.MainContainer}>
                 <View style={GlobalStyles.ViewBackgroundOpacity}>
-                    <Text style={{ textAlign: 'center' }}>
+                    <Text style={{ textAlign: 'center', fontSize: 36, color: GlobalSecondColor }}>
                         REGISTRO
                     </Text>
                 </View>
                 <View style={GlobalStyles.ViewBackgroundOpacity}>
-                    <GlobalInput title="Nombre" ph="Nombre"
+                    <GlobalInput ph="NOMBRE" center={true}
                         change={text => this.setState({ name: text })} value={this.state.name} />
-                    <GlobalInputEmail title="Email" ph="Email"
+                    <GlobalInputEmail ph="EMAIL" center={true}
                         change={text => this.setState({ email: text })} value={this.state.email} />
-                    <GlobalInput title="Celular" ph="Celular"
+                    <GlobalInput ph="CELULAR" center={true}
                         change={text => this.setState({ phone: text })} value={this.state.phone} />
-                    <GlobalInputPassword title="Contraseña" ph="Contraseña"
+                    <GlobalInputPassword ph="CONTRASEÑA" center={true}
                         change={text => this.setState({ password: text })} value={this.state.password} />
-                    <GlobalInputPassword title="Repetir contraseña" ph="Repetir contraseña"
+                    <GlobalInputPassword ph="REPETIR CONTRASEÑA" center={true}
                         change={text => this.setState({ passwordConfirmation: text })} value={this.state.passwordConfirmation} />
-                    <Text style={GlobalStyles.textError}>{this.state.errorRegister}</Text>
-                    <View style={{ alignItems: 'center' }}>
-                        <GlobalButton title="Registrar" press={() => { this.register() }}
-                            loading={this.state.loading} />
-                    </View>
+                    <GlobalButton title="REGISTRAR" press={() => { this.register() }}
+                        loading={this.state.loading} />
                 </View>
             </View>
         );
@@ -97,9 +94,9 @@ const styles = StyleSheet.create(
         MainContainer:
         {
             flex: 1,
-            justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: '#FFBC17',
+            justifyContent: 'center',
+            backgroundColor: GlobalPrimaryColor,
         }
     });
 

@@ -1,5 +1,5 @@
 export const Constants = {
-    URLSERVICE: 'http://localhost/organizate_api/'
+    URLSERVICE: 'http://192.168.1.6/organizate_api/'
 };
 
 export const ActionsConstants = {

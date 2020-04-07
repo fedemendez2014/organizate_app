@@ -1,59 +1,50 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, FlatList, TouchableOpacity } from 'react-native';
-import { LoadingSpinner } from '../../components/shared/LoadingSpinner';
-import { GlobalInput } from '../../components/shared/GlobalInput';
+import { View, Text, ScrollView, FlatList, TouchableOpacity, RefreshControl } from 'react-native';
+import LoadingSpinner from '../../components/shared/LoadingSpinner';
 import Icon from "react-native-vector-icons/Ionicons";
+import { GlobalStyles, GlobalSecondColor } from '../../Styles';
+import { GlobalInputSearch } from '../../components/shared/GlobalInput';
+import { LogoBackground } from '../../components/shared/LogoBackground';
+import { ToastQuestion } from '../../components/shared/ToastQuestion';
+import { CardList } from '../../components/shared/CardList';
 
 export default class ListEgress extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            search: ''
+            search: '',
+            refreshing: false,
+            loading: false,
+            deleteSelect: null
         }
     }
 
     render() {
         return (
-            <View>
-                <View style={{ padding: 10, width: '100%' }}>
-                    <GlobalInput ph="Buscar" change={text => this.setState({ name: text })}
-                        value={this.state.search} />
-                </View>
-                <ScrollView style={{ height: '100%' }}>
-                    <View>
-                        {
-                            //undefined !== this.props.propsCustomer.customers &&
-                            <FlatList
-                                //data={this.props.propsCustomer.customers.data}
-                                data={[1, 2, 3]}
-                                keyExtractor={(item, index) => index.toString()}
-                                extraData={this.state.refresh}
-                                renderItem={({ item }) =>
-                                    <TouchableOpacity
-                                        onPress={() => this.props.navigation.navigate('AddEditIncomeEgress', { title: 'Modificar egreso' })}>
-                                        <View style={{
-                                            borderTopWidth: 1, borderBottomWidth: 1, padding: 10,
-                                            flexDirection: 'row', marginBottom: 5
-                                        }}>
-                                            <View style={{ width: '90%' }}>
-                                                <View style={{ flexDirection: 'row', marginBottom: 10 }}>
-                                                    <Text style={{ fontWeight: 'bold' }}>{item.name}</Text>
-                                                </View>
-                                                <View style={{ flexDirection: 'row' }}>
-                                                    <Text style={{ width: '60%' }}>{item.address}</Text>
-                                                    <Text style={{ width: '40%', textAlign: 'right' }}>{item.mobile_phone}</Text>
-                                                </View>
-                                            </View>
-                                            <View style={{ width: '10%', justifyContent: 'center', alignItems: 'flex-end' }}>
-                                                <Icon size={22} name="ios-arrow-forward" />
-                                            </View>
-                                        </View>
-                                    </TouchableOpacity>
-                                } />
-                        }
-                    </View>
+            <View style={GlobalStyles.ViewBackground}>
+                <LogoBackground />
+                <GlobalInputSearch change={text => this.setState({ search: text })}
+                    value={this.state.search} />
+                <ScrollView style={GlobalStyles.scrollViewHeight} refreshControl={
+                    <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh}
+                        tintColor={GlobalSecondColor} title="Pull to refresh..."
+                        titleColor={GlobalSecondColor} />} >
+                    <FlatList
+                        data={[{ reason: 'UTE', amount: '200', date: '20/03/20' },
+                        { reason: 'UTE', amount: '200', date: '20/03/20' }]}
+                        keyExtractor={(item, index) => index.toString()}
+                        extraData={this.state.refresh}
+                        renderItem={({ item }) =>
+                            <CardList deletePress={() => this.setState({ deleteSelect: item })}
+                                press={() => this.props.navigation.navigate('AddEditCustomer', { customer: item })}
+                                title={item.reason} description={`$${item.amount}`} price={item.date} />
+                        } />
+
                 </ScrollView>
                 <LoadingSpinner visible={this.state.loading} />
+                <ToastQuestion visible={this.state.deleteSelect}
+                    pressCancel={() => this.setState({ deleteSelect: null })}
+                    title="¿Esta seguro que desea eliminar el egreso seleccionado?" />
             </View>
         );
     }

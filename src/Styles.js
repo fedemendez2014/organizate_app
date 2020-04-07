@@ -8,10 +8,13 @@ export const GlobalStyles = StyleSheet.create(
     {
         ViewBackgroundOpacity:
         {
-            backgroundColor: 'rgba(250, 250, 250, 0.75)',
+            backgroundColor: 'rgba(250, 250, 250, 0.20)',
             width: '100%',
             marginTop: 20,
-            padding: 15
+            paddingTop: 30,
+            paddingBottom: 30,
+            padding: 20,
+            justifyContent: 'center'
         },
         textError: {
             color: 'red',
@@ -21,5 +24,12 @@ export const GlobalStyles = StyleSheet.create(
             backgroundColor: '#E6E9F0',
             flex: 1,
             padding: 10
+        },
+        logoWithLetter: {
+            maxWidth: 200,
+            maxHeight: 200
+        },
+        scrollViewHeight: {
+            height: '100%', paddingTop: 0
         }
     });

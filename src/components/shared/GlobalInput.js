@@ -10,7 +10,8 @@ export const GlobalInput = (props) => {
                 undefined !== props.title &&
                 <Text style={styles.textTitle}>{props.title}</Text>
             }
-            <TextInput style={styles.textInput} placeholder={props.ph} placeholderTextColor={GlobalSecondColor}
+            <TextInput style={[styles.textInput, props.center && styles.textCenter]}
+                placeholder={props.ph} placeholderTextColor={GlobalSecondColor}
                 onChangeText={props.change} autoCapitalize="none"
                 value={props.value} keyboardType={props.type && 'numeric'} />
         </View>
@@ -20,8 +21,12 @@ export const GlobalInput = (props) => {
 export const GlobalInputEmail = (props) => {
     return (
         <View>
-            <Text style={styles.textTitle}>{props.title}</Text>
-            <TextInput style={styles.textInput} placeholder={props.ph} placeholderTextColor={GlobalSecondColor}
+            {
+                undefined !== props.title &&
+                <Text style={styles.textTitle}>{props.title}</Text>
+            }
+            <TextInput style={[styles.textInput, props.center && styles.textCenter]}
+                placeholder={props.ph} placeholderTextColor={GlobalSecondColor}
                 onChangeText={props.change} autoCapitalize="none"
                 keyboardType={'email-address'} value={props.value} />
         </View>
@@ -31,8 +36,12 @@ export const GlobalInputEmail = (props) => {
 export const GlobalInputPassword = (props) => {
     return (
         <View>
-            <Text style={styles.textTitle}>{props.title}</Text>
-            <TextInput style={styles.textInput} placeholder={props.ph} placeholderTextColor={GlobalSecondColor}
+            {
+                undefined !== props.title &&
+                <Text style={styles.textTitle}>{props.title}</Text>
+            }
+            <TextInput style={[styles.textInput, props.center && styles.textCenter]}
+                placeholder={props.ph} placeholderTextColor={GlobalSecondColor}
                 onChangeText={props.change} autoCapitalize="none"
                 value={props.value} secureTextEntry={true} />
         </View>
@@ -42,7 +51,8 @@ export const GlobalInputPassword = (props) => {
 export const GlobalInputSearch = (props) => {
     return (
         <View>
-            <TextInput style={[styles.textInput, { borderRadius: 5 }]} placeholder="Buscar"
+            <TextInput style={[styles.textInput, { borderRadius: 5 }, props.center && styles.textCenter]}
+                placeholder="Buscar"
                 placeholderTextColor={GlobalSecondColor}
                 onChangeText={props.change} autoCapitalize="none"
                 value={props.value} keyboardType={props.type && 'numeric'} />
@@ -54,16 +64,17 @@ export const GlobalInputSearch = (props) => {
 const styles = StyleSheet.create(
     {
         textTitle: {
-            paddingStart: 15
+            paddingStart: 15,
+            color: GlobalSecondColor
         },
         textInput: {
-            color: 'black',
+            color: GlobalSecondColor,
             backgroundColor: 'white',
             borderColor: GlobalSecondColor,
             borderWidth: 1,
             height: 40,
             borderWidth: 1,
-            borderRadius: 15,
+            borderRadius: 10,
             paddingStart: 10,
             marginBottom: 15
         },
@@ -71,6 +82,9 @@ const styles = StyleSheet.create(
             position: 'absolute',
             right: 10,
             top: 7
+        },
+        textCenter: {
+            textAlign: 'center'
         }
     });
 

@@ -54,10 +54,7 @@ export const actionUserIsLogged = () => {
                     }));
                 }
                 else {
-                    dispatch(actionLoginSuccess({
-                        status: false,
-                        messageError: null
-                    }));
+                    dispatch(actionLoginSuccess(null));
                 }
             }
         )

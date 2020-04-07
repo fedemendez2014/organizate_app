@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
-import { GlobalInput } from '../../components/shared/GlobalInput';
-import Icon from "react-native-vector-icons/Ionicons";
+import { View, ScrollView, FlatList, StyleSheet, RefreshControl } from 'react-native';
+import { GlobalInputSearch } from '../../components/shared/GlobalInput';
 import { connect } from 'react-redux';
 import { actionGetAllService } from '../../redux/actions/ServiceActions';
 import LoadingSpinner from '../../components/shared/LoadingSpinner';
+import { GlobalStyles, GlobalSecondColor } from '../../Styles';
+import { LogoBackground } from '../../components/shared/LogoBackground';
+import { ToastQuestion } from '../../components/shared/ToastQuestion';
+import { CardList } from '../../components/shared/CardList';
 
 class ListService extends Component {
     constructor(props) {
@@ -12,65 +15,69 @@ class ListService extends Component {
         this.state = {
             search: '',
             loading: false,
-            refresh: false
+            refresh: false,
+            deleteSelect: null,
+            refreshing: false
         }
     }
 
-    componentDidMount = async () => {
+    componentDidMount = () => {
+        this.getAllServices();
+    }
+
+    getAllServices = async () => {
         await this.setState({
             loading: true
-        })
+        });
         this.props.getAllServices({
             token: this.props.propsLogin.session.account.remember_token,
             page: 0
-        })
+        });
     }
 
     componentWillReceiveProps = async (nextProps) => {
         await this.setState({
             loading: false,
-            refresh: !this.state.refresh
+            refresh: !this.state.refresh,
+            refreshing: false
         })
+    }
+
+    onRefresh = async () => {
+        await this.setState({
+            refreshing: true
+        });
+        this.getAllServices();
     }
 
     render() {
         return (
-            <View>
-                <View style={{ padding: 10, width: '100%' }}>
-                    <GlobalInput ph="Buscar" change={text => this.setState({ name: text })}
-                        value={this.state.search} />
-                </View>
-                <ScrollView style={{ height: '100%' }}>
-                    <View>
-                        {
-                            undefined !== this.props.propsService.services &&
-                            <FlatList
-                                data={this.props.propsService.services.data}
-                                keyExtractor={(item, index) => index.toString()}
-                                extraData={this.state.refresh}
-                                renderItem={({ item }) =>
-                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('AddEditService', { service: item })}>
-                                        <View style={styles.viewList}>
-                                            <View style={{ width: '90%' }}>
-                                                <View style={{ flexDirection: 'row', marginBottom: 10 }}>
-                                                    <Text style={{ fontWeight: 'bold' }}>{item.name}</Text>
-                                                </View>
-                                                <View style={{ flexDirection: 'row' }}>
-                                                    <Text style={{ width: '60%' }}>{item.description}</Text>
-                                                    <Text style={styles.textPrice}>${item.price}</Text>
-                                                </View>
-                                            </View>
-                                            <View style={styles.iconNext}>
-                                                <Icon size={22} name="ios-arrow-forward" />
-                                            </View>
-                                        </View>
-                                    </TouchableOpacity>
-                                } />
-                        }
-                    </View>
-                </ScrollView>
+            <View style={GlobalStyles.ViewBackground}>
+                <LogoBackground />
+                <GlobalInputSearch change={text => this.setState({ search: text })}
+                    value={this.state.search} />
+                <ScrollView style={GlobalStyles.scrollViewHeight} refreshControl={
+                    <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh}
+                        tintColor={GlobalSecondColor} title="Pull to refresh..."
+                        titleColor={GlobalSecondColor} />} >
+                    {
+                        undefined !== this.props.propsService.services &&
+                        <FlatList
+                            data={this.props.propsService.services.data}
+                            keyExtractor={(item, index) => index.toString()}
+                            extraData={this.state.refresh}
+                            renderItem={({ item }) =>
+                                <CardList deletePress={() => this.setState({ deleteSelect: item })}
+                                    press={() => this.props.navigation.navigate('AddEditService', { service: item })}
+                                    title={item.name} description={item.description} price={`$${item.price}`} />
+                            } />
+                    }
+                </ScrollView >
                 <LoadingSpinner visible={this.state.loading} />
-            </View>
+                <ToastQuestion visible={this.state.deleteSelect}
+                    pressCancel={() => this.setState({ deleteSelect: null })}
+                    title="¿Esta seguro que desea eliminar el servicio seleccionado?" />
+            </View >
         );
     }
 }

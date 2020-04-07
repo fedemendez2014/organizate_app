@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity } from "react-native";
 import { GlobalInput, GlobalInputEmail, GlobalInputPassword } from '../../components/shared/GlobalInput';
 import { GlobalButton } from '../../components/shared/GlobalButton';
-import { GlobalStyles } from '../../Styles';
+import { GlobalStyles, GlobalPrimaryColor } from '../../Styles';
 import { connect } from 'react-redux';
 import { actionLogin } from '../../redux/actions/AccountActions';
 
@@ -27,7 +27,7 @@ class Login extends Component {
         }
         else {
             await this.setState({ loading: false });
-        } 
+        }
     }
 
     validate = async () => {
@@ -50,35 +50,32 @@ class Login extends Component {
     render() {
         return (
             <View style={styles.MainContainer}>
-                <View style={{
-                    borderWidth: 4, borderColor: 'white',
-                    padding: 20, borderRadius: 30, backgroundColor: 'white'
-                }}>
-                    <Image
-                        style={{ width: 120, height: 110 }}
-                        source={require('../../../assets/logo.png')}
+                <View>
+                    <Image resizeMode='stretch' style={GlobalStyles.logoWithLetter}
+                        source={require('../../../assets/logoWithBackgroundWhite.png')}
                     />
                 </View>
-                <View style={{ backgroundColor: 'rgba(250, 250, 250, 0.75)', width: '100%', marginTop: 20, padding: 15 }}>
-                    <GlobalInputEmail title="Email" ph="Email"
-                        value={this.state.email} 
+                <View style={GlobalStyles.ViewBackgroundOpacity}>
+                    <GlobalInputEmail ph="EMAIL" center={true}
+                        value={this.state.email}
                         change={text => this.setState({ email: text })} />
-                    <GlobalInputPassword title="Contraseña" ph="Contraseña"
-                        value={this.state.password} 
+                    <GlobalInputPassword ph="CONTRASEÑA" center={true}
+                        value={this.state.password}
                         change={text => this.setState({ password: text })} />
-                    <View style={{ alignItems: 'center' }}>
-                        <Text style={GlobalStyles.textError}>{this.state.errorLogin}</Text>
-                        <GlobalButton title="Ingresar"
-                            press={() => { this.login() }} loading={false} />
-                        <TouchableOpacity onPress={() => { this.props.navigation.navigate('Register') }}>
-                            <Text style={{ marginTop: 15 }}>
-                                ¿No tienes cuenta? Registrate
-                            </Text>
-                        </TouchableOpacity>
-                        <Text style={{ marginTop: 5 }}>
-                            Olvide mi contraseña
+                    <GlobalButton title="INGRESAR"
+                        press={() => { this.login() }} loading={false} />
+                    <TouchableOpacity onPress={() => { this.props.navigation.navigate('Register') }}
+                        style={{ alignItems: 'center' }}>
+                        <Text style={{ marginTop: 20, fontSize: 16, color: 'white' }}>
+                            ¿OLVIDASTE LA CONTRASEÑA?
                         </Text>
-                    </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => { this.props.navigation.navigate('Register') }}
+                        style={{ alignItems: 'center' }}>
+                        <Text style={{ marginTop: 10, fontSize: 16, color: 'white', fontWeight: 'bold' }}>
+                            REGISTRATE
+                        </Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         );
@@ -90,9 +87,9 @@ const styles = StyleSheet.create(
         MainContainer:
         {
             flex: 1,
-            justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: '#FFBC17',
+            justifyContent: 'center',
+            backgroundColor: GlobalPrimaryColor,
         }
     });
 

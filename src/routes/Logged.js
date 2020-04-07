@@ -20,7 +20,13 @@ import { OptionHeadButton } from '../components/shared/OptionHeadButton';
 const NavigationLogged = createStackNavigator(
     {
         Home: {
-            screen: Home
+            screen: Home,
+            navigationOptions: ({ navigation }) => ({
+                headerRight:
+                    <OptionHeadButton press={() => navigation.navigate('AddEditCustomer')}
+                        icon="add" size={34} />,
+                headerTitle: 'AGENDA'
+            })
         },
         ListCustomer: {
             screen: ListCustomer,
@@ -54,11 +60,9 @@ const NavigationLogged = createStackNavigator(
             screen: ListService,
             navigationOptions: ({ navigation }) => ({
                 headerRight:
-                    <TouchableOpacity onPress={() => navigation.navigate('AddEditService')}
-                        style={{ paddingRight: 15, flexDirection: 'row' }}>
-                        <Icon name="md-add" size={18} />
-                        <Text style={{ fontSize: 16, marginLeft: 2 }}>Crear</Text>
-                    </TouchableOpacity>
+                    <OptionHeadButton press={() => navigation.navigate('AddEditService')}
+                        icon="add" size={34} />,
+                headerTitle: 'SERVICIOS'
             })
         },
         AddEditService: {
@@ -84,22 +88,18 @@ const NavigationLogged = createStackNavigator(
             screen: ListIncome,
             navigationOptions: ({ navigation }) => ({
                 headerRight:
-                    <TouchableOpacity onPress={() => navigation.navigate('AddEditIncomeEgress', { title: 'Agregar ingreso' })}
-                        style={{ paddingRight: 15, flexDirection: 'row' }}>
-                        <Icon name="md-add" size={18} />
-                        <Text style={{ fontSize: 16, marginLeft: 2 }}>Crear</Text>
-                    </TouchableOpacity>
+                    <OptionHeadButton press={() => navigation.navigate('AddEditIncomeEgress', { title: 'Agregar ingreso' })}
+                        icon="add" size={34} />,
+                headerTitle: 'INGRESOS'
             })
         },
         ListEgress: {
             screen: ListEgress,
             navigationOptions: ({ navigation }) => ({
                 headerRight:
-                    <TouchableOpacity onPress={() => navigation.navigate('AddEditIncomeEgress', { title: 'Agregar egreso' })}
-                        style={{ paddingRight: 15, flexDirection: 'row' }}>
-                        <Icon name="md-add" size={18} />
-                        <Text style={{ fontSize: 16, marginLeft: 2 }}>Crear</Text>
-                    </TouchableOpacity>
+                    <OptionHeadButton press={() => navigation.navigate('AddEditIncomeEgress', { title: 'Agregar egreso' })}
+                        icon="add" size={34} />,
+                headerTitle: 'EGRESOS'
             })
         },
         AddEditIncomeEgress: {
@@ -123,7 +123,7 @@ const NavigationLogged = createStackNavigator(
         }
     },
     {
-        initialRouteName: 'ListCustomer',
+        initialRouteName: 'ListEgress',
         defaultNavigationOptions: ({ navigation }) => ({
             headerLeft: <DrawerButton navigation={navigation} />,
             headerTitle: <Image resizeMode='contain'

@@ -1,8 +1,8 @@
 platform :ios, '9.0'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-target 'organizate_app' do
-  # Pods for organizate_app
+target 'OrganizateApp' do
+  # Pods for OrganizateApp
   pod 'React', :path => '../node_modules/react-native/'
   pod 'React-Core', :path => '../node_modules/react-native/React'
   pod 'React-DevSupport', :path => '../node_modules/react-native/React'
@@ -31,7 +31,9 @@ target 'organizate_app' do
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 
-  target 'organizate_appTests' do
+  pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
+
+  target 'OrganizateAppTests' do
     inherit! :search_paths
     # Pods for testing
   end
@@ -39,10 +41,10 @@ target 'organizate_app' do
   use_native_modules!
 end
 
-target 'organizate_app-tvOS' do
-  # Pods for organizate_app-tvOS
+target 'OrganizateApp-tvOS' do
+  # Pods for OrganizateApp-tvOS
 
-  target 'organizate_app-tvOSTests' do
+  target 'OrganizateApp-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end

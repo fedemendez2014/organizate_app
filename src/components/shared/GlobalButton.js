@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TouchableHighlight, ActivityIndicator } from "react-native";
-import { GlobalPrimaryColor } from '../../Styles';
+import { GlobalPrimaryColor, GlobalSecondColor } from '../../Styles';
 
 export const GlobalButton = (props) => {
     return (
@@ -11,7 +11,7 @@ export const GlobalButton = (props) => {
                 </TouchableHighlight>
                 :
                 <TouchableOpacity style={styles.button} onPress={props.press}>
-                    <Text>{props.title}</Text>
+                    <Text style={styles.text}>{props.title}</Text>
                 </TouchableOpacity>}
         </View>
     );
@@ -20,14 +20,18 @@ export const GlobalButton = (props) => {
 const styles = StyleSheet.create(
     {
         button: {
-            marginTop: 15,
-            borderRadius: 15,
+            borderRadius: 10,
             alignContent: 'center',
             justifyContent: 'center',
             alignItems: 'center',
             height: 40,
-            backgroundColor: GlobalPrimaryColor,
-            width: 100
+            backgroundColor: GlobalSecondColor,
+            borderColor: 'white',
+            borderWidth: 1
+        },
+        text: {
+            color: 'white',
+            fontWeight: 'bold'
         }
     });
 
