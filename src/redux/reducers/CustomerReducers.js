@@ -1,17 +1,13 @@
 import { ActionsConstants } from "../../Constants";
 
 const initalStateCustomer = {
-    customers: [],
-    customer: [],
     statusUpdate: null,
     statusAdd: null,
-    statusGet: null,
-    statusGetAll: null,
     statusDelete: null,
     messageError: ''
 };
 
-export const reducerCustomer = (state = {}, action) => {
+export const reducerCustomer = (state = initalStateCustomer, action) => {
     switch (action.type) {
         case ActionsConstants.ADD_CUSTOMER_SUCCESS:
             return { ...initalStateCustomer, statusAdd: true };
@@ -21,6 +17,25 @@ export const reducerCustomer = (state = {}, action) => {
             return { ...initalStateCustomer, statusUpdate: true };
         case ActionsConstants.UPDATE_CUSTOMER_ERROR:
             return { ...state, statusUpdate: false, messageError: action.data.messageError };
+        case ActionsConstants.DELETE_CUSTOMER_SUCCESS:
+            return { ...initalStateCustomer, statusDelete: true }
+        case ActionsConstants.DELETE_CUSTOMER_ERROR:
+            return { ...initalStateCustomer, statusDelete: false, messageError: action.data.messageError }
+        default:
+            return state;
+    }
+};
+
+const initalStateCustomerGets = {
+    customers: [],
+    customer: [],
+    statusGet: null,
+    statusGetAll: null,
+    messageError: ''
+};
+
+export const reducerCustomerGets = (state = initalStateCustomerGets, action) => {
+    switch (action.type) {
         case ActionsConstants.GET_CUSTOMER_SUCCESS:
             return { ...state, statusGet: true };
         case ActionsConstants.GET_CUSTOMER_ERROR:
@@ -29,10 +44,6 @@ export const reducerCustomer = (state = {}, action) => {
             return { ...state, statusGetAll: true, customers: action.data.customers };
         case ActionsConstants.GET_ALL_CUSTOMER_ERROR:
             return { ...state, statusGetAll: false, messageError: action.data.messageError };
-        case ActionsConstants.DELETE_CUSTOMER_SUCCESS:
-            return { ...initalStateCustomer, statusDelete: true }
-        case ActionsConstants.DELETE_CUSTOMER_ERROR:
-            return { ...initalStateCustomer, statusDelete: false, messageError: action.data.messageError }
         default:
             return state;
     }

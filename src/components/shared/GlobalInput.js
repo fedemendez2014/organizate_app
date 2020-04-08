@@ -7,8 +7,8 @@ export const GlobalInput = (props) => {
     return (
         <View>
             {
-                undefined !== props.title &&
-                <Text style={styles.textTitle}>{props.title}</Text>
+                undefined !== props.title && "" !== props.value ?
+                    <Text style={styles.textTitle}>{props.title}</Text> : null
             }
             <TextInput style={[styles.textInput, props.center && styles.textCenter]}
                 placeholder={props.ph} placeholderTextColor={GlobalSecondColor}
@@ -22,8 +22,8 @@ export const GlobalInputEmail = (props) => {
     return (
         <View>
             {
-                undefined !== props.title &&
-                <Text style={styles.textTitle}>{props.title}</Text>
+                undefined !== props.title && "" !== props.value ?
+                    <Text style={styles.textTitle}>{props.title}</Text> : null
             }
             <TextInput style={[styles.textInput, props.center && styles.textCenter]}
                 placeholder={props.ph} placeholderTextColor={GlobalSecondColor}
@@ -37,8 +37,8 @@ export const GlobalInputPassword = (props) => {
     return (
         <View>
             {
-                undefined !== props.title &&
-                <Text style={styles.textTitle}>{props.title}</Text>
+                undefined !== props.title && "" !== props.value ?
+                    <Text style={styles.textTitle}>{props.title}</Text> : null
             }
             <TextInput style={[styles.textInput, props.center && styles.textCenter]}
                 placeholder={props.ph} placeholderTextColor={GlobalSecondColor}
@@ -64,7 +64,7 @@ export const GlobalInputSearch = (props) => {
 const styles = StyleSheet.create(
     {
         textTitle: {
-            paddingStart: 15,
+            paddingStart: 10,
             color: GlobalSecondColor
         },
         textInput: {

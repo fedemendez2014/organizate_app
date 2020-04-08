@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
     propsLogin: state.reducerLogin,
-    propsService: state.reducerService
+    propsService: state.reducerServiceGets
 })
 
 const mapDispatchToProps = dispatch => ({

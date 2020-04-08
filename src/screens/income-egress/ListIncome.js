@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, FlatList, TouchableOpacity, RefreshControl } from 'react-native';
+import { View, ScrollView, FlatList, RefreshControl } from 'react-native';
 import LoadingSpinner from '../../components/shared/LoadingSpinner';
-import { GlobalInput, GlobalInputSearch } from '../../components/shared/GlobalInput';
-import Icon from "react-native-vector-icons/Ionicons";
+import { GlobalInputSearch } from '../../components/shared/GlobalInput';
+import { connect } from 'react-redux';
 import { GlobalStyles, GlobalSecondColor } from '../../Styles';
 import { LogoBackground } from '../../components/shared/LogoBackground';
 import { CardList } from '../../components/shared/CardList';
 import { ToastQuestion } from '../../components/shared/ToastQuestion';
+import { actionGetAllIncomeEgress } from '../../redux/actions/IncomeEgressActions';
+import { Constants } from '../../Constants';
 
-export default class ListIncome extends Component {
+class ListIncome extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -18,6 +20,36 @@ export default class ListIncome extends Component {
             refreshing: false,
             deleteSelect: null
         }
+    }
+
+    componentDidMount = async () => {
+        this.getAllIncomes();
+    }
+
+    getAllIncomes = async () => {
+        await this.setState({
+            loading: true
+        })
+        this.props.getAllIncomes({
+            token: this.props.propsLogin.session.account.remember_token,
+            page: 0,
+            type: 1 //INCOMES
+        })
+    }
+
+    componentWillReceiveProps = async (nextProps) => {
+        await this.setState({
+            loading: false,
+            refresh: !this.state.refresh,
+            refreshing: false
+        })
+    }
+
+    onRefresh = async () => {
+        await this.setState({
+            refreshing: true
+        })
+        this.getAllIncomes();
     }
 
     render() {
@@ -30,17 +62,19 @@ export default class ListIncome extends Component {
                     <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh}
                         tintColor={GlobalSecondColor} title="Pull to refresh..."
                         titleColor={GlobalSecondColor} />} >
-                    <FlatList
-                        data={[{ reason: 'UTE', amount: '200', date: '20/03/20' },
-                        { reason: 'UTE', amount: '200', date: '20/03/20' }]}
-                        keyExtractor={(item, index) => index.toString()}
-                        extraData={this.state.refresh}
-                        renderItem={({ item }) =>
-                            <CardList deletePress={() => this.setState({ deleteSelect: item })}
-                                press={() => this.props.navigation.navigate('AddEditCustomer', { customer: item })}
-                                title={item.reason} description={`$${item.amount}`} price={item.date} />
-                        } />
-
+                    {
+                        undefined !== this.props.propsIncome.objects &&
+                        <FlatList
+                            data={this.props.propsIncome.objects}
+                            keyExtractor={(item, index) => index.toString()}
+                            extraData={this.state.refresh}
+                            renderItem={({ item }) =>
+                                <CardList deletePress={() => this.setState({ deleteSelect: item })}
+                                    press={() => this.props.navigation.navigate('AddEditIncomeEgress',
+                                        { incomeEgress: item, type: Constants.INCOME })}
+                                    title={item.reason} description={`$${item.amount}`} price={item.date} />
+                            } />
+                    }
                 </ScrollView>
                 <LoadingSpinner visible={this.state.loading} />
                 <ToastQuestion visible={this.state.deleteSelect}
@@ -50,3 +84,16 @@ export default class ListIncome extends Component {
         );
     }
 }
+
+const mapStateToProps = state => ({
+    propsLogin: state.reducerLogin,
+    propsIncome: state.reducerIncomeEgressGets
+})
+
+const mapDispatchToProps = dispatch => ({
+    getAllIncomes: (data) => {
+        dispatch(actionGetAllIncomeEgress(data));
+    }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListIncome);

@@ -15,7 +15,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import AddEditCustomer from '../screens/customer/AddEditCustomer';
 import AddEditService from '../screens/service/AddEditService';
 import { GlobalPrimaryColor, GlobalSecondColor } from '../Styles';
-import { OptionHeadButton } from '../components/shared/OptionHeadButton';
+import { OptionHeadButton, BackHeadButton } from '../components/shared/HeadButtons';
+import { Constants } from '../Constants';
 
 const NavigationLogged = createStackNavigator(
     {
@@ -24,7 +25,7 @@ const NavigationLogged = createStackNavigator(
             navigationOptions: ({ navigation }) => ({
                 headerRight:
                     <OptionHeadButton press={() => navigation.navigate('AddEditCustomer')}
-                        icon="add" size={34} />,
+                        icon="md-add" size={26} />,
                 headerTitle: 'AGENDA'
             })
         },
@@ -33,7 +34,7 @@ const NavigationLogged = createStackNavigator(
             navigationOptions: ({ navigation }) => ({
                 headerRight:
                     <OptionHeadButton press={() => navigation.navigate('AddEditCustomer')}
-                        icon="add" size={34} />,
+                        icon="md-add" size={26} />,
                 headerTitle: 'CLIENTES'
             })
         },
@@ -42,17 +43,12 @@ const NavigationLogged = createStackNavigator(
             navigationOptions: ({ navigation }) => {
                 const { params = {} } = navigation.state;
                 return {
-                    headerTitle: "Clientes",
+                    headerTitle: params.title ? params.title : 'CLIENTES',
                     headerRight:
-                        <TouchableOpacity onPress={() => params.functionCustomer()}
-                            style={{ paddingRight: 15, flexDirection: 'row' }}>
-                            <Icon name="md-checkmark" size={18} />
-                            <Text style={{ fontSize: 16, marginLeft: 2 }}>Save</Text>
-                        </TouchableOpacity>,
-                    headerLeft: <Icon name={Platform.OS === 'android' ? "md-arrow-back" : "ios-arrow-back"}
-                        color="#000" size={26}
-                        onPress={() => { navigation.goBack() }}
-                        style={{ paddingLeft: 15 }} />
+                        <OptionHeadButton press={() => params.functionCustomer()}
+                            icon="md-checkmark" size={26} />,
+                    headerLeft:
+                        <BackHeadButton press={() => navigation.goBack()} />
                 }
             }
         },
@@ -61,7 +57,7 @@ const NavigationLogged = createStackNavigator(
             navigationOptions: ({ navigation }) => ({
                 headerRight:
                     <OptionHeadButton press={() => navigation.navigate('AddEditService')}
-                        icon="add" size={34} />,
+                        icon="md-add" size={26} />,
                 headerTitle: 'SERVICIOS'
             })
         },
@@ -70,17 +66,12 @@ const NavigationLogged = createStackNavigator(
             navigationOptions: ({ navigation }) => {
                 const { params = {} } = navigation.state;
                 return {
-                    headerTitle: "Servicios",
+                    headerTitle: params.title ? params.title : 'SERVICIOS',
                     headerRight:
-                        <TouchableOpacity onPress={() => params.functionService()}
-                            style={{ paddingRight: 15, flexDirection: 'row' }}>
-                            <Icon name="md-checkmark" size={18} />
-                            <Text style={{ fontSize: 16, marginLeft: 2 }}>Save</Text>
-                        </TouchableOpacity>,
-                    headerLeft: <Icon name={Platform.OS === 'android' ? "md-arrow-back" : "ios-arrow-back"}
-                        color="#000" size={26}
-                        onPress={() => { navigation.goBack() }}
-                        style={{ paddingLeft: 15 }} />
+                        <OptionHeadButton press={() => params.functionService()}
+                            icon="md-checkmark" size={26} />,
+                    headerLeft:
+                        <BackHeadButton press={() => navigation.goBack()} />
                 }
             }
         },
@@ -88,8 +79,8 @@ const NavigationLogged = createStackNavigator(
             screen: ListIncome,
             navigationOptions: ({ navigation }) => ({
                 headerRight:
-                    <OptionHeadButton press={() => navigation.navigate('AddEditIncomeEgress', { title: 'Agregar ingreso' })}
-                        icon="add" size={34} />,
+                    <OptionHeadButton press={() => navigation.navigate('AddEditIncomeEgress', { type: Constants.INCOME })}
+                        icon="md-add" size={26} />,
                 headerTitle: 'INGRESOS'
             })
         },
@@ -97,8 +88,8 @@ const NavigationLogged = createStackNavigator(
             screen: ListEgress,
             navigationOptions: ({ navigation }) => ({
                 headerRight:
-                    <OptionHeadButton press={() => navigation.navigate('AddEditIncomeEgress', { title: 'Agregar egreso' })}
-                        icon="add" size={34} />,
+                    <OptionHeadButton press={() => navigation.navigate('AddEditIncomeEgress', { type: Constants.EGRESS })}
+                        icon="md-add" size={26} />,
                 headerTitle: 'EGRESOS'
             })
         },
@@ -107,29 +98,20 @@ const NavigationLogged = createStackNavigator(
             navigationOptions: ({ navigation }) => {
                 const { params = {} } = navigation.state;
                 return {
-                    headerTitle: params.title,
+                    headerTitle: params.title ? params.title : params.type === Constants.INCOME ? 'INGRESOS' : 'EGRESOS',
                     headerRight:
-                        <TouchableOpacity onPress={() => params.functionService()}
-                            style={{ paddingRight: 15, flexDirection: 'row' }}>
-                            <Icon name="md-checkmark" size={18} />
-                            <Text style={{ fontSize: 16, marginLeft: 2 }}>Save</Text>
-                        </TouchableOpacity>,
-                    headerLeft: <Icon name={Platform.OS === 'android' ? "md-arrow-back" : "ios-arrow-back"}
-                        color="#000" size={26}
-                        onPress={() => { navigation.goBack() }}
-                        style={{ paddingLeft: 15 }} />
+                        <OptionHeadButton press={() => params.functionIncomeEgress()}
+                            icon="md-checkmark" size={26} />,
+                    headerLeft:
+                        <BackHeadButton press={() => navigation.goBack()} />
                 }
             }
         }
     },
     {
-        initialRouteName: 'ListEgress',
+        initialRouteName: 'Home',
         defaultNavigationOptions: ({ navigation }) => ({
             headerLeft: <DrawerButton navigation={navigation} />,
-            headerTitle: <Image resizeMode='contain'
-                style={{ marginBottom: 5, height: '100%' }}
-                source={require('../../assets/logoWithOutLetter.png')}
-            />,
             headerStyle: {
                 backgroundColor: GlobalPrimaryColor
             },

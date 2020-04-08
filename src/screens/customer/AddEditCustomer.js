@@ -4,12 +4,13 @@ import { GlobalInput } from '../../components/shared/GlobalInput';
 import { connect } from 'react-redux';
 import { actionAddCustomer } from '../../redux/actions/CustomerActions';
 import CustomerModel from '../../models/CustomerModel';
+import { GlobalStyles } from '../../Styles';
+import { LogoBackground } from '../../components/shared/LogoBackground';
 
 class AddEditCustomer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            search: '',
             loading: false,
             customer: new CustomerModel()
         }
@@ -29,10 +30,10 @@ class AddEditCustomer extends Component {
                     email: customer.email
                 }
             })
-            this.props.navigation.setParams({ functionCustomer: this.updateCustomer });
+            this.props.navigation.setParams({ functionCustomer: this.updateCustomer, title: 'MODIFICAR CLIENTE' });
         }
         else {
-            this.props.navigation.setParams({ functionCustomer: this.addCustomer });
+            this.props.navigation.setParams({ functionCustomer: this.addCustomer, title: 'NUEVO CLIENTE' });
         }
     }
 
@@ -75,8 +76,9 @@ class AddEditCustomer extends Component {
 
     render() {
         return (
-            <View>
-                <ScrollView style={{ padding: 10, paddingTop: 20 }}>
+            <View style={GlobalStyles.ViewBackground}>
+                <LogoBackground />
+                <ScrollView>
                     <GlobalInput ph="Nombre" value={this.state.customer.name} title="Nombre"
                         change={text => this.setState({ customer: { ...this.state.customer, name: text } })} />
                     <GlobalInput ph="Email" value={this.state.customer.email} title="Email"

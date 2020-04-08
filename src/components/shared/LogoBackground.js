@@ -11,7 +11,7 @@ const { height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     view: {
-        position: 'absolute', width: '100%', alignItems: 'center',
+        position: 'absolute', alignItems: 'center', width: '100%',
         height: height - 120, justifyContent: 'center'
     },
     image: {

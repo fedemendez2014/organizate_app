@@ -22,8 +22,7 @@ export const GlobalStyles = StyleSheet.create(
         },
         ViewBackground: {
             backgroundColor: '#E6E9F0',
-            flex: 1,
-            padding: 10
+            flex: 1
         },
         logoWithLetter: {
             maxWidth: 200,
@@ -31,5 +30,8 @@ export const GlobalStyles = StyleSheet.create(
         },
         scrollViewHeight: {
             height: '100%', paddingTop: 0
+        },
+        ScrollView: {
+            padding: 10
         }
     });

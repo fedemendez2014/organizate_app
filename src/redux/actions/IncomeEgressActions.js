@@ -1,5 +1,5 @@
 import { ActionsConstants } from '../../Constants';
-import { AddIncomeEgress, UpdateIncomeEgress } from '../services/IncomeEgressServices';
+import { AddIncomeEgress, UpdateIncomeEgress, GetAllIncomeEgress } from '../services/IncomeEgressServices';
 
 /**
  * ADD INCOME EGRESS 
@@ -62,11 +62,11 @@ export const actionUpdateIncomeEgressError = (data) => ({
  */
 export const actionGetAllIncomeEgress = (data) => {
     return dispatch => {
-        const oResult = GetAllService(data);
+        const oResult = GetAllIncomeEgress(data);
         oResult.then(
             oSuccess => {
                 dispatch(actionGetAllIncomeEgressSuccess({
-                    services: oSuccess.services
+                    objects: oSuccess.data.data
                 }))
             },
             oError => {

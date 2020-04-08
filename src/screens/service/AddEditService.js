@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { GlobalInput } from '../../components/shared/GlobalInput';
-import { LoadingSpinner } from '../../components/shared/LoadingSpinner';
+import LoadingSpinner from '../../components/shared/LoadingSpinner';
 import { connect } from 'react-redux';
 import { actionAddService, actionUpdateService } from '../../redux/actions/ServiceActions';
 import ServiceModel from '../../models/ServiceModel';
+import { GlobalStyles } from '../../Styles';
+import { LogoBackground } from '../../components/shared/LogoBackground';
 
 class AddEditService extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            search: '',
             loading: false,
             service: new ServiceModel()
         }
@@ -28,10 +29,10 @@ class AddEditService extends Component {
                     observations: service.observations
                 }
             })
-            this.props.navigation.setParams({ functionService: this.updateService });
+            this.props.navigation.setParams({ functionService: this.updateService, title: 'MODIFICAR SERVICIO' });
         }
         else {
-            this.props.navigation.setParams({ functionService: this.addService });
+            this.props.navigation.setParams({ functionService: this.addService, title: 'NUEVO SERVICIO' });
         }
     }
 
@@ -65,7 +66,7 @@ class AddEditService extends Component {
         }
         if (nextProps.propsService !== this.props.propsService && null !== nextProps.propsService.statusUpdate
             && nextProps.propsService.statusUpdate) {
-           //SHOW TOAST SOLAMENTE
+            //SHOW TOAST SOLAMENTE
         }
         await this.setState({
             loading: false
@@ -74,8 +75,9 @@ class AddEditService extends Component {
 
     render() {
         return (
-            <View style={{ flex: 1 }}>
-                <ScrollView style={{ padding: 10, paddingTop: 20 }}>
+            <View style={GlobalStyles.ViewBackground}>
+                <LogoBackground />
+                <ScrollView>
                     <GlobalInput ph="Nombre" change={text => this.setState({ service: { ...this.state.service, name: text } })}
                         value={this.state.service.name} title="Nombre" />
                     <GlobalInput ph="Descripción" change={text => this.setState({ service: { ...this.state.service, description: text } })}

@@ -8,7 +8,7 @@ export default class ServiceModel {
         this.id = 0;
         this.name = '';
         this.description = '';
-        this.price = '0';
+        this.price = '';
         this.observations = '';
     }
 }

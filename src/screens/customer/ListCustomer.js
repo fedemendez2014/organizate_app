@@ -84,7 +84,7 @@ class ListCustomer extends Component {
 
 const mapStateToProps = state => ({
     propsLogin: state.reducerLogin,
-    propsCustomer: state.reducerCustomer
+    propsCustomer: state.reducerCustomerGets
 })
 
 const mapDispatchToProps = dispatch => ({
