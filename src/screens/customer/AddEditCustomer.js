@@ -78,7 +78,7 @@ class AddEditCustomer extends Component {
         return (
             <View style={GlobalStyles.ViewBackground}>
                 <LogoBackground />
-                <ScrollView>
+                <ScrollView style={{padding: 10}}>
                     <GlobalInput ph="Nombre" value={this.state.customer.name} title="Nombre"
                         change={text => this.setState({ customer: { ...this.state.customer, name: text } })} />
                     <GlobalInput ph="Email" value={this.state.customer.email} title="Email"

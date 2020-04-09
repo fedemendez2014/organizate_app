@@ -45,7 +45,7 @@ class AddEditIncomeEgress extends Component {
         return (
             <View style={GlobalStyles.ViewBackground}>
                 <LogoBackground />
-                <ScrollView>
+                <ScrollView style={{ padding: 10 }}>
                     <GlobalInput ph="Razón" value={this.state.incomeEgress.reason} title="Razón"
                         change={text => this.setState({ incomeEgress: { ...this.state.incomeEgress, reason: text } })} />
                     <GlobalInput ph="Monto" value={this.state.incomeEgress.amount} title="Monto"

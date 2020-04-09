@@ -54,25 +54,27 @@ class ListCustomer extends Component {
         return (
             <View style={GlobalStyles.ViewBackground}>
                 <LogoBackground />
-                <GlobalInputSearch change={text => this.setState({ search: text })}
-                    value={this.state.search} />
-                <ScrollView style={GlobalStyles.scrollViewHeight} refreshControl={
-                    <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh}
-                        tintColor={GlobalSecondColor} title="Pull to refresh..."
-                        titleColor={GlobalSecondColor} />} >
-                    {
-                        undefined !== this.props.propsCustomer.customers &&
-                        <FlatList
-                            data={this.props.propsCustomer.customers.data}
-                            keyExtractor={(item, index) => index.toString()}
-                            extraData={this.state.refresh}
-                            renderItem={({ item }) =>
-                                <CardList deletePress={() => this.setState({ deleteSelect: item })}
-                                    press={() => this.props.navigation.navigate('AddEditCustomer', { customer: item })}
-                                    title={item.name} description={`${item.mobile_phone}, ${item.address}`} />
-                            } />
-                    }
-                </ScrollView >
+                <View style={{padding: 10}}>
+                    <GlobalInputSearch change={text => this.setState({ search: text })}
+                        value={this.state.search} />
+                    <ScrollView style={GlobalStyles.scrollViewHeight} refreshControl={
+                        <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh}
+                            tintColor={GlobalSecondColor} title="Pull to refresh..."
+                            titleColor={GlobalSecondColor} />} >
+                        {
+                            undefined !== this.props.propsCustomer.customers &&
+                            <FlatList
+                                data={this.props.propsCustomer.customers.data}
+                                keyExtractor={(item, index) => index.toString()}
+                                extraData={this.state.refresh}
+                                renderItem={({ item }) =>
+                                    <CardList deletePress={() => this.setState({ deleteSelect: item })}
+                                        press={() => this.props.navigation.navigate('AddEditCustomer', { customer: item })}
+                                        title={item.name} description={`${item.mobile_phone}, ${item.address}`} />
+                                } />
+                        }
+                    </ScrollView >
+                </View>
                 <LoadingSpinner visible={this.state.loading} />
                 <ToastQuestion visible={this.state.deleteSelect}
                     pressCancel={() => this.setState({ deleteSelect: null })}

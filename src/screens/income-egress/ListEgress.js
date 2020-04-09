@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, ScrollView, FlatList, TouchableOpacity, RefreshControl } from 'react-native';
 import LoadingSpinner from '../../components/shared/LoadingSpinner';
-import Icon from "react-native-vector-icons/Ionicons";
 import { GlobalStyles, GlobalSecondColor } from '../../Styles';
 import { GlobalInputSearch } from '../../components/shared/GlobalInput';
 import { LogoBackground } from '../../components/shared/LogoBackground';
@@ -57,26 +56,28 @@ class ListEgress extends Component {
         return (
             <View style={GlobalStyles.ViewBackground}>
                 <LogoBackground />
-                <GlobalInputSearch change={text => this.setState({ search: text })}
-                    value={this.state.search} />
-                <ScrollView style={GlobalStyles.scrollViewHeight} refreshControl={
-                    <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh}
-                        tintColor={GlobalSecondColor} title="Pull to refresh..."
-                        titleColor={GlobalSecondColor} />} >
-                    {
-                        undefined !== this.props.propsEgress.objects &&
-                        <FlatList
-                            data={this.props.propsEgress.objects}
-                            keyExtractor={(item, index) => index.toString()}
-                            extraData={this.state.refresh}
-                            renderItem={({ item }) =>
-                                <CardList deletePress={() => this.setState({ deleteSelect: item })}
-                                    press={() => this.props.navigation.navigate('AddEditIncomeEgress',
-                                        { incomeEgress: item, type: Constants.EGRESS })}
-                                    title={item.reason} description={`$${item.amount}`} price={item.date} />
-                            } />
-                    }
-                </ScrollView>
+                <View style={{ padding: 10 }}>
+                    <GlobalInputSearch change={text => this.setState({ search: text })}
+                        value={this.state.search} />
+                    <ScrollView style={GlobalStyles.scrollViewHeight} refreshControl={
+                        <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh}
+                            tintColor={GlobalSecondColor} title="Pull to refresh..."
+                            titleColor={GlobalSecondColor} />} >
+                        {
+                            undefined !== this.props.propsEgress.objects &&
+                            <FlatList
+                                data={this.props.propsEgress.objects}
+                                keyExtractor={(item, index) => index.toString()}
+                                extraData={this.state.refresh}
+                                renderItem={({ item }) =>
+                                    <CardList deletePress={() => this.setState({ deleteSelect: item })}
+                                        press={() => this.props.navigation.navigate('AddEditIncomeEgress',
+                                            { incomeEgress: item, type: Constants.EGRESS })}
+                                        title={item.reason} description={`$${item.amount}`} price={item.date} />
+                                } />
+                        }
+                    </ScrollView>
+                </View>
                 <LoadingSpinner visible={this.state.loading} />
                 <ToastQuestion visible={this.state.deleteSelect}
                     pressCancel={() => this.setState({ deleteSelect: null })}

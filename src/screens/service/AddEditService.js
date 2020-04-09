@@ -77,7 +77,7 @@ class AddEditService extends Component {
         return (
             <View style={GlobalStyles.ViewBackground}>
                 <LogoBackground />
-                <ScrollView>
+                <ScrollView style={{ padding: 10 }}>
                     <GlobalInput ph="Nombre" change={text => this.setState({ service: { ...this.state.service, name: text } })}
                         value={this.state.service.name} title="Nombre" />
                     <GlobalInput ph="Descripción" change={text => this.setState({ service: { ...this.state.service, description: text } })}
