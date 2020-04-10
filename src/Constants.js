@@ -41,3 +41,13 @@ export const ActionsConstants = {
     DELETE_INCOME_EGRESS_SUCCESS: 'DELETE_INCOME_EGRESS_SUCCESS',
     DELETE_INCOME_EGRESS_ERROR: 'DELETE_INCOME_EGRESS_ERROR',
 }
+
+export const Days = [
+    'Dom.',
+    'Lun.',
+    'Mar.',
+    'Mie.',
+    'Jue.',
+    'Vie.',
+    'Sab.'
+]

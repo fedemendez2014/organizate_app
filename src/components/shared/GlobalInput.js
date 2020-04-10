@@ -63,6 +63,7 @@ export const GlobalInputSearch = (props) => {
 
 const styles = StyleSheet.create(
     {
+        //SHARED
         textTitle: {
             paddingStart: 10,
             color: GlobalSecondColor
