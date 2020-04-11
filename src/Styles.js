@@ -35,3 +35,48 @@ export const GlobalStyles = StyleSheet.create(
             padding: 10
         }
     });
+
+export const GlobalModal = StyleSheet.create({
+    viewContentPosition: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0,0,0,0.50)',
+    },
+    viewHead: {
+        borderBottomWidth: 0.5,
+        borderBottomColor: GlobalSecondColor
+    },
+    viewContent: {
+        backgroundColor: 'white',
+        borderTopRightRadius: 40,
+        borderTopLeftRadius: 40,
+        marginTop: 40,
+        flex: 1
+    },
+    headTitle: {
+        fontWeight: 'bold',
+        textAlign: 'center',
+        padding: 15,
+        fontSize: 16,
+        color: GlobalSecondColor
+    },
+    buttonRight: {
+        position: 'absolute',
+        right: 10,
+        padding: 15,
+        color: GlobalSecondColor
+    },
+    buttonLeft: {
+        zIndex: 1,
+        position: 'absolute',
+        left: 10,
+        padding: 15
+    },
+    titleButton: {
+        fontSize: 18,
+        color: GlobalSecondColor
+    }
+})

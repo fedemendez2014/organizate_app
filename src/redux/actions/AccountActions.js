@@ -1,6 +1,6 @@
 import { Constants, ActionsConstants } from '../../Constants';
 import { login } from '../services/AccountServices';
-import { AsyncStorage } from "react-native";
+import AsyncStorage from "@react-native-community/async-storage";
 
 /**
  * 
@@ -82,19 +82,19 @@ export const actionUserSessionCloseSuccess = () => ({
  *  
  */
 const setStorange = async (oSessionLogin) => {
-    await AsyncStorage.setItem('@OrganizateApp:UserSession', JSON.stringify(oSessionLogin));
+    await AsyncStorage.setItem('@OrganizateApp_UserSession', JSON.stringify(oSessionLogin));
 }
 
 /**
  * 
  */
 const getLoginDataLocalStorange = async () => {
-    return await AsyncStorage.getItem('@OrganizateApp:UserSession');
+    return await AsyncStorage.getItem('@OrganizateApp_UserSession');
 }
 
 /**
  * 
  */
 const setEmptyLocalStorange = async () => {
-    await AsyncStorage.removeItem('@OrganizateApp:UserSession');
+    await AsyncStorage.removeItem('@OrganizateApp_UserSession');
 }

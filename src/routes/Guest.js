@@ -10,13 +10,13 @@ const NavigationGuest = createStackNavigator(
         Login: {
             screen: Login,
             navigationOptions: {
-                header: null
+                headerShown: false
             }
         },
         Register: {
             screen: Register,
             navigationOptions: {
-                header: null
+                headerShown: false
             }
         },
         Home: {

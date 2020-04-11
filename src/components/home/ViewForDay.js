@@ -8,15 +8,15 @@ import { Days } from '../../Constants';
 class ViewForDay extends Component {
     constructor(props) {
         super(props);
+        moment.locale('es');
         this.state = {
             weekDays: {
-                start: moment().startOf('week').add(1, 'd').toDate(),
-                end: moment().endOf('week').add(1, 'd').toDate(),
+                start: moment().startOf('week').toDate(),
+                end: moment().endOf('week').toDate(),
                 sevenDays: []
             },
             daySelect: moment().format('YYYY-MM-DD')
         }
-        moment.locale('es');
     }
 
     componentDidMount = () => {
@@ -26,10 +26,11 @@ class ViewForDay extends Component {
     getToday = async () => {
         await this.setState({
             weekDays: {
-                start: moment().startOf('week').add(1, 'd').toDate(),
-                end: moment().endOf('week').add(1, 'd').toDate(),
+                start: moment().startOf('week').toDate(),
+                end: moment().endOf('week').toDate(),
                 sevenDays: []
-            }
+            },
+            daySelect: moment().format('YYYY-MM-DD')
         });
         this.generateWeekDays();
     }
@@ -84,19 +85,31 @@ class ViewForDay extends Component {
                     onSwipeRight={() => this.changeWeek(2)}
                 >
                     <View style={{ padding: 10, width: '100%', justifyContent: 'center' }}>
-                        <Text style={{
-                            textAlign: 'center', fontWeight: 'bold',
-                            color: GlobalSecondColor, paddingBottom: 5
-                        }}>
-                            {
-                                moment(this.state.weekDays.end).format('MMMM').charAt(0).toUpperCase() +
-                                moment(this.state.weekDays.end).format('MMMM').substring(1)
-                            }
-                        </Text>
+                        <View>
+                            <Text style={{
+                                textAlign: 'center', fontWeight: 'bold',
+                                color: GlobalSecondColor, paddingBottom: 5
+                            }}>
+                                {
+                                    moment(this.state.weekDays.end).format('MMMM').charAt(0).toUpperCase() +
+                                    moment(this.state.weekDays.end).format('MMMM').substring(1)
+                                }
+                            </Text>
+                            <TouchableOpacity onPress={() => this.getToday()} style={{
+                                position: 'absolute', right: 10
+                            }}>
+                                <Text style={{
+                                    fontWeight: 'bold',
+                                    textAlign: 'right', color: GlobalSecondColor
+                                }}>
+                                    Hoy
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
                         <View style={{ flexDirection: 'row', }}>
                             {
                                 this.state.weekDays.sevenDays.length > 0 &&
-                                this.state.weekDays.sevenDays.map((element, index) =>
+                                this.state.weekDays.sevenDays.map((element) =>
                                     <View style={{
                                         justifyContent: 'center', alignItems: 'center',
                                         marginRight: 'auto',
@@ -124,20 +137,20 @@ class ViewForDay extends Component {
                                 )
                             }
                         </View>
-                        <TouchableOpacity onPress={() => this.getToday()}>
-                            <Text style={{
-                                fontWeight: 'bold',
-                                textAlign: 'center', color: GlobalSecondColor, paddingTop: 5
-                            }}>
-                                {moment(this.state.daySelect).format('LL')}
-                            </Text>
-                        </TouchableOpacity>
                     </View>
                 </GestureRecognizer>
+                <View style={{
+                    paddingStart: 10, borderBottomWidth: 0.5,
+                    borderColor: GlobalSecondColor, paddingBottom: 2
+                }}>
+                    <Text style={{ fontWeight: 'bold', color: GlobalSecondColor, textAlign: 'center' }}>
+                        {moment(this.state.daySelect).format('LL')}
+                    </Text>
+                </View>
                 <ScrollView style={[GlobalStyles.ScrollView, { padding: 0 }]}>
                     <View style={{
                         flexDirection: 'row', borderBottomWidth: 0.5, paddingLeft: 10, paddingRight: 10,
-                        width: '100%', borderColor: GlobalSecondColor, borderTopWidth: 0.5
+                        width: '100%', borderColor: GlobalSecondColor
                     }}>
                         <View style={{ justifyContent: 'center' }}>
                             <Text style={{ color: GlobalSecondColor }}>
@@ -145,7 +158,7 @@ class ViewForDay extends Component {
                             </Text>
                         </View>
                         <TouchableOpacity style={{
-                            margin: 1,
+                            margin: 2,
                             marginLeft: 10, padding: 5,
                             backgroundColor: GlobalPrimaryColor,
                         }}>
@@ -169,10 +182,10 @@ class ViewForDay extends Component {
                             </Text>
                         </View>
                         <TouchableOpacity style={{
-                            margin: 1,
+                            margin: 2,
                             marginLeft: 10, padding: 5,
                             backgroundColor: '#2E9F46',
-                        }}>
+                        }} onPress={() => { this.props.showDetails("asasdas") }}>
                             <Text style={{ color: 'white', fontWeight: 'bold' }}>
                                 Federico Mendez
                             </Text>
@@ -192,7 +205,7 @@ class ViewForDay extends Component {
                             </Text>
                         </View>
                         <TouchableOpacity style={{
-                            margin: 1,
+                            margin: 2,
                             marginLeft: 10, padding: 5,
                             backgroundColor: 'transparent',
                         }}>
@@ -215,7 +228,7 @@ class ViewForDay extends Component {
                             </Text>
                         </View>
                         <TouchableOpacity style={{
-                            margin: 1,
+                            margin: 2,
                             marginLeft: 10, padding: 5,
                             backgroundColor: GlobalPrimaryColor,
                         }}>

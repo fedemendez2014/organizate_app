@@ -23,7 +23,7 @@ const NavigationLogged = createStackNavigator(
         Home: {
             screen: Home,
             navigationOptions: ({ navigation }) => ({
-                headerRight:
+                headerRight: () =>
                     <OptionHeadButton press={() => navigation.navigate('AddEditCustomer')}
                         icon="md-add" size={26} />,
                 headerTitle: 'AGENDA'
@@ -32,7 +32,7 @@ const NavigationLogged = createStackNavigator(
         ListCustomer: {
             screen: ListCustomer,
             navigationOptions: ({ navigation }) => ({
-                headerRight:
+                headerRight: () =>
                     <OptionHeadButton press={() => navigation.navigate('AddEditCustomer')}
                         icon="md-add" size={26} />,
                 headerTitle: 'CLIENTES'
@@ -44,10 +44,10 @@ const NavigationLogged = createStackNavigator(
                 const { params = {} } = navigation.state;
                 return {
                     headerTitle: params.title ? params.title : 'CLIENTES',
-                    headerRight:
+                    headerRight: () =>
                         <OptionHeadButton press={() => params.functionCustomer()}
                             icon="md-checkmark" size={26} />,
-                    headerLeft:
+                    headerLeft: () =>
                         <BackHeadButton press={() => navigation.goBack()} />
                 }
             }
@@ -55,7 +55,7 @@ const NavigationLogged = createStackNavigator(
         ListService: {
             screen: ListService,
             navigationOptions: ({ navigation }) => ({
-                headerRight:
+                headerRight: () =>
                     <OptionHeadButton press={() => navigation.navigate('AddEditService')}
                         icon="md-add" size={26} />,
                 headerTitle: 'SERVICIOS'
@@ -67,10 +67,10 @@ const NavigationLogged = createStackNavigator(
                 const { params = {} } = navigation.state;
                 return {
                     headerTitle: params.title ? params.title : 'SERVICIOS',
-                    headerRight:
+                    headerRight: () =>
                         <OptionHeadButton press={() => params.functionService()}
                             icon="md-checkmark" size={26} />,
-                    headerLeft:
+                    headerLeft: () =>
                         <BackHeadButton press={() => navigation.goBack()} />
                 }
             }
@@ -78,7 +78,7 @@ const NavigationLogged = createStackNavigator(
         ListIncome: {
             screen: ListIncome,
             navigationOptions: ({ navigation }) => ({
-                headerRight:
+                headerRight: () =>
                     <OptionHeadButton press={() => navigation.navigate('AddEditIncomeEgress', { type: Constants.INCOME })}
                         icon="md-add" size={26} />,
                 headerTitle: 'INGRESOS'
@@ -87,7 +87,7 @@ const NavigationLogged = createStackNavigator(
         ListEgress: {
             screen: ListEgress,
             navigationOptions: ({ navigation }) => ({
-                headerRight:
+                headerRight: () =>
                     <OptionHeadButton press={() => navigation.navigate('AddEditIncomeEgress', { type: Constants.EGRESS })}
                         icon="md-add" size={26} />,
                 headerTitle: 'EGRESOS'
@@ -99,10 +99,10 @@ const NavigationLogged = createStackNavigator(
                 const { params = {} } = navigation.state;
                 return {
                     headerTitle: params.title ? params.title : params.type === Constants.INCOME ? 'INGRESOS' : 'EGRESOS',
-                    headerRight:
+                    headerRight: () =>
                         <OptionHeadButton press={() => params.functionIncomeEgress()}
                             icon="md-checkmark" size={26} />,
-                    headerLeft:
+                    headerLeft: () =>
                         <BackHeadButton press={() => navigation.goBack()} />
                 }
             }
@@ -111,7 +111,7 @@ const NavigationLogged = createStackNavigator(
     {
         initialRouteName: 'Home',
         defaultNavigationOptions: ({ navigation }) => ({
-            headerLeft: <DrawerButton navigation={navigation} />,
+            headerLeft: () => <DrawerButton navigation={navigation} />,
             headerStyle: {
                 backgroundColor: GlobalPrimaryColor
             },
