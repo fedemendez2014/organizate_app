@@ -45,7 +45,9 @@ export default class Home extends Component {
                         <View style={GlobalModal.viewContent}>
                             <LogoBackground />
                             <View style={GlobalModal.viewHead}>
-                                <Text style={GlobalModal.headTitle}>Detalles reserva #29</Text>
+                                <Text style={GlobalModal.headTitle}>
+                                    Detalles reserva #{this.state.detailsSelect.reservation.id}
+                                </Text>
                                 <TouchableOpacity style={[GlobalModal.buttonRight, { flexDirection: 'row' }]}
                                     onPress={() => this.setState({ detailsSelect: null })}>
                                     <Icon name="md-close" size={26} color={GlobalSecondColor} />
@@ -53,33 +55,33 @@ export default class Home extends Component {
                             </View>
                             <ScrollView style={{ marginTop: 10 }}>
                                 <View style={styles.cardDetailsView}>
-                                    <View style={styles.cardDetailsHead}>
-                                        <Text style={styles.cardDetailsTitle}>
-                                            Reserva
-                                        </Text>
+                                    <View style={{ marginBottom: 10 }}>
+                                        <View style={styles.cardDetailsHead}>
+                                            <Text style={styles.cardDetailsTitle}>
+                                                Reserva
+                                            </Text>
+                                        </View>
+                                        <View style={styles.cardDetailsData}>
+                                            <DataCard title="Fecha:" details="viernes, 22 de abril de 2020" />
+                                            <DataCard title="Hora:" details="22:00 hs" />
+                                        </View>
                                     </View>
-                                    <View style={styles.cardDetailsData}>
-                                        <DataCard title="Fecha:" details="viernes, 22 de abril de 2020" />
-                                        <DataCard title="Hora:" details="22:00 hs" />
+                                    <View style={{ marginBottom: 10 }}>
+                                        <View style={styles.cardDetailsHead}>
+                                            <Text style={styles.cardDetailsTitle}>
+                                                Cliente
+                                            </Text>
+                                        </View>
+                                        <View style={styles.cardDetailsData}>
+                                            <DataCard title="Nombre:" details="Federico Mendez" />
+                                            <DataCard title="Email:" details="fedemendez2014@icloud.com" />
+                                            <DataCard title="Dirección:"
+                                                details="Defensa 1827, apto 221, Montevideo" />
+                                            <DataCard title="Teléfono:" details="" />
+                                            <DataCard title="Celular:" details="098694456" />
+                                            <DataCard title="Observaciónes:" details="Cliente muy bueno" />
+                                        </View>
                                     </View>
-                                </View>
-                                <View style={styles.cardDetailsView}>
-                                    <View style={styles.cardDetailsHead}>
-                                        <Text style={styles.cardDetailsTitle}>
-                                            Cliente
-                                        </Text>
-                                    </View>
-                                    <View style={styles.cardDetailsData}>
-                                        <DataCard title="Nombre:" details="Federico Mendez" />
-                                        <DataCard title="Email:" details="fedemendez2014@icloud.com" />
-                                        <DataCard title="Dirección:"
-                                            details="Defensa 1827, apto 221, Montevideo" />
-                                        <DataCard title="Teléfono:" details="" />
-                                        <DataCard title="Celular:" details="098694456" />
-                                        <DataCard title="Observaciónes:" details="Cliente muy bueno" />
-                                    </View>
-                                </View>
-                                <View style={styles.cardDetailsView}>
                                     <View style={styles.cardDetailsHead}>
                                         <Text style={styles.cardDetailsTitle}>
                                             Servicio
@@ -129,12 +131,11 @@ const styles = StyleSheet.create(
         cardDetailsView: {
             backgroundColor: 'white', paddingTop: 10, marginLeft: 10,
             marginRight: 10, borderRadius: 5, shadowColor: "#000",
-            shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5,
+            shadowOpacity: 0.50, shadowRadius: 4, elevation: 5,
             shadowOffset: {
                 width: 0,
                 height: 2,
-            },
-            marginBottom: 10
+            }
         },
         cardDetailsHead: {
             borderBottomColor: GlobalSecondColor, borderBottomWidth: 0.5

@@ -11,14 +11,19 @@ export class GlobalDatePicker extends Component {
 
     render() {
         return (
-            <View style={styles.viewPicker}>
+            <View style={[styles.viewPicker,
+                this.props.hiddenBorder && { borderBottomWidth: 0, paddingBottom: 5 }]}>
                 <Text style={styles.textTitle}>{this.props.title}</Text>
                 <View style={styles.comboSelect}>
                     <TouchableOpacity
                         onPress={() => this.refs.datePicker.onPressDate()} style={{ flexDirection: 'row' }}
                         style={styles.touchable}>
                         <Text style={styles.textValue}>
-                            {this.props.date.format("DD/MM/YYYY")}
+                            {
+                                this.props.time ?
+                                    this.props.time.format("hh:mm A")
+                                    : this.props.date.format("DD/MM/YYYY")
+                            }
                         </Text>
                         <Icon name="md-arrow-dropdown" size={32} style={styles.iconSelect} />
                     </TouchableOpacity>
@@ -30,12 +35,13 @@ export class GlobalDatePicker extends Component {
                             color: GlobalSecondColor
                         }
                     }}
-                    format="YYYY-MM-DD"
-                    confirmBtnText="Set"
-                    cancelBtnText="Close"
+                    mode={this.props.time ? 'time' : 'date'}
+                    confirmBtnText="Confirmar"
+                    cancelBtnText="Cerrar"
                     ref={'datePicker'}
                     onDateChange={this.props.change}
-                    date={this.props.date.format("YYYY-MM-DD")}
+                    date={this.props.time ? this.props.time.format("hh:mm A")
+                        : this.props.date.format("DD/MM/YYYY")}
                     androidMode='spinner'
                 />
             </View>

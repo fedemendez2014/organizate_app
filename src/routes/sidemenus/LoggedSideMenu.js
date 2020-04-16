@@ -21,17 +21,17 @@ class LoggedSideMenu extends Component {
     render() {
         return (
             <View style={styles.content}>
-                <View style={[styles.viewTouchable, { alignItems: 'center', marginTop: 40 }]}>
-                    <View>
-                        <Image resizeMode='stretch' style={GlobalStyles.logoWithLetter}
-                            source={require('../../../assets/logoWithBackgroundWhite.png')}
-                        />
-                    </View>
-                    <Text style={styles.textVersion}>
-                        Versión 1.0.0
-                    </Text>
-                </View>
                 <ScrollView>
+                    <View style={[styles.viewTouchable, { alignItems: 'center', marginTop: 40 }]}>
+                        <View>
+                            <Image resizeMode='stretch' style={{ maxHeight: 150, maxWidth: 150 }}
+                                source={require('../../../assets/logoWithBackgroundWhite.png')}
+                            />
+                        </View>
+                        <Text style={styles.textVersion}>
+                            Versión 1.0.0
+                    </Text>
+                    </View>
                     <OptionMenu press={() => this.navigatePage('Home')} icon="paper" title="Agenda" />
                     <OptionMenu press={() => this.navigatePage('ListCustomer')} icon="people" title="Clientes" />
                     <OptionMenu press={() => this.navigatePage('ListService')} icon="basket" title="Servicios" />

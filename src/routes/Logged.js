@@ -17,6 +17,7 @@ import AddEditService from '../screens/service/AddEditService';
 import { GlobalPrimaryColor, GlobalSecondColor } from '../Styles';
 import { OptionHeadButton, BackHeadButton } from '../components/shared/HeadButtons';
 import { Constants } from '../Constants';
+import AddEditReservation from '../screens/home/AddEditReservation';
 
 const NavigationLogged = createStackNavigator(
     {
@@ -24,10 +25,24 @@ const NavigationLogged = createStackNavigator(
             screen: Home,
             navigationOptions: ({ navigation }) => ({
                 headerRight: () =>
-                    <OptionHeadButton press={() => navigation.navigate('AddEditCustomer')}
+                    <OptionHeadButton press={() => navigation.navigate('AddEditReservation')}
                         icon="md-add" size={26} />,
                 headerTitle: 'AGENDA'
             })
+        },
+        AddEditReservation: {
+            screen: AddEditReservation,
+            navigationOptions: ({ navigation }) => {
+                const { params = {} } = navigation.state;
+                return {
+                    headerTitle: params.title ? params.title : 'RESERVA',
+                    headerRight: () =>
+                        <OptionHeadButton press={() => {/*params.functionReservation()*/}}
+                            icon="md-checkmark" size={26} />,
+                    headerLeft: () =>
+                        <BackHeadButton press={() => navigation.goBack()} />
+                }
+            }
         },
         ListCustomer: {
             screen: ListCustomer,

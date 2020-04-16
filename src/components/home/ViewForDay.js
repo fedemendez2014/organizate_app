@@ -148,102 +148,81 @@ class ViewForDay extends Component {
                     </Text>
                 </View>
                 <ScrollView style={[GlobalStyles.ScrollView, { padding: 0 }]}>
-                    <View style={{
-                        flexDirection: 'row', borderBottomWidth: 0.5, paddingLeft: 10, paddingRight: 10,
-                        width: '100%', borderColor: GlobalSecondColor
-                    }}>
-                        <View style={{ justifyContent: 'center' }}>
-                            <Text style={{ color: GlobalSecondColor }}>
-                                8:00
-                            </Text>
-                        </View>
-                        <TouchableOpacity style={{
-                            margin: 2,
-                            marginLeft: 10, padding: 5,
-                            backgroundColor: GlobalPrimaryColor,
-                        }}>
-                            <Text style={{ color: GlobalSecondColor, fontWeight: 'bold' }}>
-                                Federico Mendez
-                            </Text>
-                            <Text style={{ color: GlobalSecondColor, fontSize: 12 }}>
-                                Corte de pelo
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-
-
-                    <View style={{
-                        flexDirection: 'row', borderBottomWidth: 0.5,
-                        width: '100%', borderColor: GlobalSecondColor, paddingLeft: 10, paddingRight: 10,
-                    }}>
-                        <View style={{ justifyContent: 'center' }}>
-                            <Text style={{ color: GlobalSecondColor }}>
-                                8:30
-                            </Text>
-                        </View>
-                        <TouchableOpacity style={{
-                            margin: 2,
-                            marginLeft: 10, padding: 5,
-                            backgroundColor: '#2E9F46',
-                        }} onPress={() => { this.props.showDetails("asasdas") }}>
-                            <Text style={{ color: 'white', fontWeight: 'bold' }}>
-                                Federico Mendez
-                            </Text>
-                            <Text style={{ color: 'white', fontSize: 12 }}>
-                                Corte de pelo
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-
-                    <View style={{
-                        flexDirection: 'row', borderBottomWidth: 0.5,
-                        width: '100%', borderColor: GlobalSecondColor, paddingLeft: 10, paddingRight: 10,
-                    }}>
-                        <View style={{ justifyContent: 'center' }}>
-                            <Text style={{ color: GlobalSecondColor }}>
-                                9:00
-                            </Text>
-                        </View>
-                        <TouchableOpacity style={{
-                            margin: 2,
-                            marginLeft: 10, padding: 5,
-                            backgroundColor: 'transparent',
-                        }}>
-                            <Text style={{ color: GlobalSecondColor, fontWeight: 'bold' }}>
-
-                            </Text>
-                            <Text style={{ color: GlobalSecondColor, fontSize: 12 }}>
-
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-
-                    <View style={{
-                        flexDirection: 'row', borderBottomWidth: 0.5,
-                        width: '100%', borderColor: GlobalSecondColor, paddingLeft: 10, paddingRight: 10,
-                    }}>
-                        <View style={{ justifyContent: 'center' }}>
-                            <Text style={{ color: GlobalSecondColor }}>
-                                9:30
-                            </Text>
-                        </View>
-                        <TouchableOpacity style={{
-                            margin: 2,
-                            marginLeft: 10, padding: 5,
-                            backgroundColor: GlobalPrimaryColor,
-                        }}>
-                            <Text style={{ color: GlobalSecondColor, fontWeight: 'bold' }}>
-                                Federico Mendez
-                            </Text>
-                            <Text style={{ color: GlobalSecondColor, fontSize: 12 }}>
-                                Corte de pelo
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
+                    {
+                        day.map(element =>
+                            <View style={{
+                                flexDirection: 'row', borderBottomWidth: 0.5, paddingLeft: 10, paddingRight: 10,
+                                width: '100%', borderColor: GlobalSecondColor
+                            }}>
+                                <View style={{ justifyContent: 'center' }}>
+                                    <Text style={{ color: GlobalSecondColor }}>
+                                        {element.hour}
+                                    </Text>
+                                </View>
+                                {
+                                    element.reservation ?
+                                        <TouchableOpacity onPress={() => { this.props.showDetails(element) }}
+                                            style={{
+                                                margin: 2, flex: 1,
+                                                marginLeft: 10, padding: 5,
+                                                backgroundColor: element.reservation.isFinished ? '#2E9F46' : GlobalPrimaryColor,
+                                            }}>
+                                            <Text style={{
+                                                color: element.reservation.isFinished ? 'white' : GlobalSecondColor,
+                                                fontWeight: 'bold'
+                                            }} numberOfLines={1}>
+                                                {element.reservation.name}
+                                            </Text>
+                                            <Text style={{
+                                                color: element.reservation.isFinished ? 'white' : GlobalSecondColor,
+                                                fontSize: 12
+                                            }} numberOfLines={1}>
+                                                {element.reservation.serviceName}
+                                            </Text>
+                                        </TouchableOpacity> :
+                                        <View
+                                            style={{
+                                                height: 42,
+                                                marginLeft: 10,
+                                                backgroundColor: 'transparent'
+                                            }} />
+                                }
+                            </View>
+                        )
+                    }
                 </ScrollView>
             </View>
         );
     }
 }
+
+const day = [
+    {
+        hour: '08:00',
+        reservation: {
+            id: 29,
+            name: 'Federico Martin Mendez Lopez',
+            serviceName: 'Corte de pelo clasico',
+            isFinished: true
+        }
+    },
+    {
+        hour: '08:30',
+        reservation: null
+    },
+    {
+        hour: '09:00',
+        reservation: {
+            id: 33,
+            name: 'Sofia Guerra',
+            serviceName: 'Servicio de masajes 30m',
+            isFinished: false
+        }
+    },
+    {
+        hour: '10:00',
+        reservation: null
+    }
+]
 
 export default ViewForDay;
