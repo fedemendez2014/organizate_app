@@ -4,6 +4,7 @@ import { reducerRegister, reducerLogin } from './reducers/AccountReducers';
 import { reducerService, reducerServiceGets } from './reducers/ServiceReducers';
 import { reducerCustomer, reducerCustomerGets } from './reducers/CustomerReducers';
 import { reducerIncomeEgress, reducerIncomeEgressGets } from './reducers/IncomeEgressReducers';
+import { reducerScheduleGets } from './reducers/ScheduleReducers';
 
 const reducers = combineReducers({
     reducerRegister,
@@ -13,7 +14,8 @@ const reducers = combineReducers({
     reducerCustomer,
     reducerCustomerGets,
     reducerIncomeEgress,
-    reducerIncomeEgressGets
+    reducerIncomeEgressGets,
+    reducerScheduleGets
 });
 
 const Store = createStore(reducers, applyMiddleware(thunk));

@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from "react-native";
 import { GlobalStyles, GlobalSecondColor, GlobalPrimaryColor } from '../../Styles';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import moment from "moment/min/moment-with-locales";
 import { Days } from '../../Constants';
+import { connect } from 'react-redux';
+import { actionGetScheduleList } from '../../redux/actions/ScheduleActions';
 
 class ViewForDay extends Component {
     constructor(props) {
@@ -21,6 +23,14 @@ class ViewForDay extends Component {
 
     componentDidMount = () => {
         this.generateWeekDays();
+        this.getScheduleList();
+    }
+
+    getScheduleList = () => {
+        this.props.getScheduleList({
+            date: this.state.daySelect,
+            token: this.props.propsLogin.session.account.remember_token
+        });
     }
 
     getToday = async () => {
@@ -77,6 +87,13 @@ class ViewForDay extends Component {
         this.generateWeekDays();
     }
 
+    getDay = async (element) => {
+        await this.setState({
+            daySelect: moment(element).format('YYYY-MM-DD')
+        });
+        this.getScheduleList();
+    }
+
     render() {
         return (
             <View style={{ flex: 1 }}>
@@ -110,30 +127,9 @@ class ViewForDay extends Component {
                             {
                                 this.state.weekDays.sevenDays.length > 0 &&
                                 this.state.weekDays.sevenDays.map((element) =>
-                                    <View style={{
-                                        justifyContent: 'center', alignItems: 'center',
-                                        marginRight: 'auto',
-                                        marginLeft: 'auto',
-                                    }}>
-                                        <Text style={{ marginBottom: 2, color: GlobalSecondColor, fontSize: 12 }}>
-                                            {Days[element.getDay()]}
-                                        </Text>
-                                        <TouchableOpacity onPress={() => this.setState({ daySelect: moment(element).format('YYYY-MM-DD') })}
-                                            style={{
-                                                height: 40, width: 40, borderWidth: 2, borderRadius: 99,
-                                                borderColor: GlobalSecondColor,
-                                                backgroundColor: moment(element).format('YYYY-MM-DD') === this.state.daySelect ? GlobalSecondColor : 'white'
-                                                , justifyContent: 'center', alignItems: 'center'
-                                            }}>
-                                            <Text style={{
-                                                color: moment(element).format('YYYY-MM-DD') === this.state.daySelect ? 'white' : GlobalSecondColor,
-                                                fontWeight: 'bold',
-                                                fontSize: 16
-                                            }}>
-                                                {element.getDate()}
-                                            </Text>
-                                        </TouchableOpacity>
-                                    </View>
+                                    <BubbleDay press={() => this.getDay(element)}
+                                        element={element} daySelect={this.state.daySelect}
+                                    />
                                 )
                             }
                         </View>
@@ -149,14 +145,14 @@ class ViewForDay extends Component {
                 </View>
                 <ScrollView style={[GlobalStyles.ScrollView, { padding: 0 }]}>
                     {
-                        day.map(element =>
+                        this.props.propsSchedule.scheduleList.map(element =>
                             <View style={{
                                 flexDirection: 'row', borderBottomWidth: 0.5, paddingLeft: 10, paddingRight: 10,
                                 width: '100%', borderColor: GlobalSecondColor
                             }}>
                                 <View style={{ justifyContent: 'center' }}>
                                     <Text style={{ color: GlobalSecondColor }}>
-                                        {element.hour}
+                                        {element.time}
                                     </Text>
                                 </View>
                                 {
@@ -171,21 +167,30 @@ class ViewForDay extends Component {
                                                 color: element.reservation.isFinished ? 'white' : GlobalSecondColor,
                                                 fontWeight: 'bold'
                                             }} numberOfLines={1}>
-                                                {element.reservation.name}
+                                                {element.reservation.customer.name}
                                             </Text>
                                             <Text style={{
                                                 color: element.reservation.isFinished ? 'white' : GlobalSecondColor,
                                                 fontSize: 12
                                             }} numberOfLines={1}>
-                                                {element.reservation.serviceName}
+                                                {element.reservation.services.map(
+                                                    (service, index) => `${index !== 0 ? ', ' : ''}${service.name}`
+                                                )}
                                             </Text>
                                         </TouchableOpacity> :
-                                        <View
+                                        <TouchableOpacity
+                                            onPress={() => {
+                                                this.props.navigation.navigate('AddEditReservation', {
+                                                    date: this.state.daySelect,
+                                                    time: `${this.state.daySelect} ${element.time}`
+                                                })
+                                            }}
                                             style={{
-                                                height: 42,
+                                                height: 42, flex: 1,
                                                 marginLeft: 10,
                                                 backgroundColor: 'transparent'
-                                            }} />
+                                            }}>
+                                        </TouchableOpacity>
                                 }
                             </View>
                         )
@@ -196,9 +201,48 @@ class ViewForDay extends Component {
     }
 }
 
+const BubbleDay = (props) => (
+    <View style={bubbleDayStyles.view}>
+        <Text style={bubbleDayStyles.textDay}>
+            {Days[props.element.getDay()]}
+        </Text>
+        <TouchableOpacity onPress={props.press}
+            style={[bubbleDayStyles.touchable, {
+                backgroundColor: moment(props.element).format('YYYY-MM-DD') === props.daySelect ?
+                    GlobalSecondColor : 'white'
+            }]}>
+            <Text style={[bubbleDayStyles.textBubbleDay, {
+                color: moment(props.element).format('YYYY-MM-DD') === props.daySelect ?
+                    'white' : GlobalSecondColor,
+            }]}>
+                {props.element.getDate()}
+            </Text>
+        </TouchableOpacity>
+    </View >
+);
+
+const bubbleDayStyles = StyleSheet.create({
+    view: {
+        justifyContent: 'center', alignItems: 'center',
+        marginRight: 'auto', marginLeft: 'auto',
+    },
+    textDay: {
+        marginBottom: 2, color: GlobalSecondColor,
+        fontSize: 12
+    },
+    touchable: {
+        height: 40, width: 40, borderWidth: 2, borderRadius: 99,
+        borderColor: GlobalSecondColor, justifyContent: 'center',
+        alignItems: 'center'
+    },
+    textBubbleDay: {
+        fontWeight: 'bold', fontSize: 16
+    }
+});
+
 const day = [
     {
-        hour: '08:00',
+        time: '08:00',
         reservation: {
             id: 29,
             name: 'Federico Martin Mendez Lopez',
@@ -207,22 +251,33 @@ const day = [
         }
     },
     {
-        hour: '08:30',
+        time: '08:30',
         reservation: null
     },
     {
-        hour: '09:00',
+        time: '09:00',
         reservation: {
             id: 33,
             name: 'Sofia Guerra',
-            serviceName: 'Servicio de masajes 30m',
+            serviceName: 'Lavado y tinta 30m',
             isFinished: false
         }
     },
     {
-        hour: '10:00',
+        time: '10:00',
         reservation: null
     }
 ]
 
-export default ViewForDay;
+const mapStateToProps = state => ({
+    propsLogin: state.reducerLogin,
+    propsSchedule: state.reducerScheduleGets
+})
+
+const mapDispatchToProps = dispatch => ({
+    getScheduleList: (data) => {
+        dispatch(actionGetScheduleList(data));
+    }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ViewForDay);

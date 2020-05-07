@@ -36,7 +36,8 @@ export default class Home extends Component {
                     change={(value, index) => this.setState({ viewFor: index })} />
                 {
                     0 === this.state.viewFor ? // 0 = DIA | 1 = SEMANA
-                        <ViewForDay showDetails={(item) => { this.setState({ detailsSelect: item }) }} />
+                        <ViewForDay showDetails={(item) => { this.setState({ detailsSelect: item }) }}
+                            navigation={this.props.navigation} />
                         : <ViewForWeek />
                 }
                 {

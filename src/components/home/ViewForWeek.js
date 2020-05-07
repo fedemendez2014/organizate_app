@@ -75,7 +75,6 @@ class ViewForWeek extends Component {
                                 flexDirection: 'row', borderBottomWidth: 0.5, paddingLeft: 10, paddingRight: 10,
                                 width: '100%', borderColor: GlobalSecondColor
                             }}>
-                                {console.log(element)}
                                 <View style={{ justifyContent: 'center', width: 40 }}>
                                     <Text style={{ color: GlobalSecondColor, fontSize: 12 }}>
                                         {element.hour}

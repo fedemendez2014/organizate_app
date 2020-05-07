@@ -1,5 +1,5 @@
 export const Constants = {
-    URLSERVICE: 'http://localhost/organizate_api/',
+    URLSERVICE: 'http://192.168.1.5/organizate_api/',
     INCOME: 1,
     EGRESS: 2
 };
@@ -40,6 +40,9 @@ export const ActionsConstants = {
     GET_ALL_INCOME_EGRESS_ERROR: 'GET_ALL_INCOME_EGRESS_ERROR',
     DELETE_INCOME_EGRESS_SUCCESS: 'DELETE_INCOME_EGRESS_SUCCESS',
     DELETE_INCOME_EGRESS_ERROR: 'DELETE_INCOME_EGRESS_ERROR',
+    //HOME SCHEDULE
+    GET_SCHEDULE_SUCCESS: 'GET_SCHEDULE_SUCCESS',
+    GET_SCHEDULE_ERROR: 'GET_SCHEDULE_ERROR'
 }
 
 export const Days = [

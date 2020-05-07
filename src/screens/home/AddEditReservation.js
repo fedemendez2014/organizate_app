@@ -8,13 +8,21 @@ class AddEditReservation extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            date: moment(),
-            time: moment(),
+            date: this.props.navigation.getParam('date', false) ?
+                moment(this.props.navigation.getParam('date', false)) : moment(),
+            time: this.props.navigation.getParam('time', false) ?
+                moment(this.props.navigation.getParam('time', false)) : moment(),
         }
     }
 
     componentDidMount = () => {
-        
+
+    }
+
+    setTime = async (value) => {
+        await this.setState({
+            time: moment(`${this.state.date.format('YYYY-MM-DD')} ${value}`)
+        })
     }
 
     render() {
@@ -22,9 +30,9 @@ class AddEditReservation extends Component {
             <View>
                 <LogoBackground />
                 <GlobalDatePicker title="Fecha" date={this.state.date}
-                    change={() => { }} hiddenBorder={true} />
+                    change={(value) => { this.setState({ date: moment(value) }) }} hiddenBorder={true} />
                 <GlobalDatePicker title="Hora" time={this.state.time}
-                    change={() => { }} hiddenBorder={true} />
+                    change={(value) => this.setTime(value)} hiddenBorder={true} />
             </View>
         );
     }

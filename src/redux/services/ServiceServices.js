@@ -21,7 +21,6 @@ export const AddService = (data) => {
 }
 
 export const UpdateService = (data) => {
-    console.log(data)
     let config = {
         headers: {
             Authorization: data.token,

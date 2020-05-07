@@ -36,6 +36,7 @@ export class GlobalDatePicker extends Component {
                         }
                     }}
                     mode={this.props.time ? 'time' : 'date'}
+                    minuteInterval={5}
                     confirmBtnText="Confirmar"
                     cancelBtnText="Cerrar"
                     ref={'datePicker'}
