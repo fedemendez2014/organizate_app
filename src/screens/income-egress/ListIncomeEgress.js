@@ -10,46 +10,36 @@ import { ToastQuestion } from '../../components/shared/ToastQuestion';
 import { actionGetAllIncomeEgress } from '../../redux/actions/IncomeEgressActions';
 import { Constants } from '../../Constants';
 
-class ListIncome extends Component {
+class ListIncomeEgress extends Component {
     constructor(props) {
         super(props);
         this.state = {
             search: '',
-            loading: false,
-            refresh: false,
-            refreshing: false,
-            deleteSelect: null
+            deleteSelect: null,
+            page: 1
         }
     }
 
     componentDidMount = async () => {
-        this.getAllIncomes();
+        this.getAllIncomesEgress();
     }
 
-    getAllIncomes = async () => {
-        await this.setState({
-            loading: true
-        })
-        this.props.getAllIncomes({
+    componentDidUpdate = (prevProps) => {
+        if(this.props.navigation.getParam('type', null) !== prevProps.navigation.getParam('type', null)) {
+            this.getAllIncomesEgress();
+        }
+    }
+
+    getAllIncomesEgress = () => {
+        this.props.getAllIncomesEgress({
             token: this.props.propsLogin.session.account.remember_token,
-            page: 0,
-            type: 1 //INCOMES
+            page: this.state.page,
+            type: this.props.navigation.getParam('type', null)
         })
     }
 
-    componentWillReceiveProps = async (nextProps) => {
-        await this.setState({
-            loading: false,
-            refresh: !this.state.refresh,
-            refreshing: false
-        })
-    }
-
-    onRefresh = async () => {
-        await this.setState({
-            refreshing: true
-        })
-        this.getAllIncomes();
+    onRefresh = () => {
+        this.getAllIncomesEgress();
     }
 
     render() {
@@ -64,21 +54,21 @@ class ListIncome extends Component {
                             tintColor={GlobalSecondColor} title="Pull to refresh..."
                             titleColor={GlobalSecondColor} />} >
                         {
-                            undefined !== this.props.propsIncome.objects &&
+                            undefined !== this.props.propsIncomeEgress.objects &&
                             <FlatList
-                                data={this.props.propsIncome.objects}
+                                data={this.props.propsIncomeEgress.objects}
                                 keyExtractor={(item, index) => index.toString()}
                                 extraData={this.state.refresh}
                                 renderItem={({ item }) =>
                                     <CardList deletePress={() => this.setState({ deleteSelect: item })}
                                         press={() => this.props.navigation.navigate('AddEditIncomeEgress',
-                                            { incomeEgress: item, type: Constants.INCOME })}
+                                            { incomeEgress: item, type: item.type })}
                                         title={item.reason} description={`$${item.amount}`} price={item.date} />
                                 } />
                         }
                     </ScrollView>
                 </View>
-                <LoadingSpinner visible={this.state.loading} />
+                <LoadingSpinner visible={this.props.propsIncomeEgress.loading} />
                 <ToastQuestion visible={this.state.deleteSelect}
                     pressCancel={() => this.setState({ deleteSelect: null })}
                     title="¿Esta seguro que desea eliminar el ingreso seleccionado?" />
@@ -89,13 +79,13 @@ class ListIncome extends Component {
 
 const mapStateToProps = state => ({
     propsLogin: state.reducerLogin,
-    propsIncome: state.reducerIncomeEgressGets
+    propsIncomeEgress: state.reducerIncomeEgressGets
 })
 
 const mapDispatchToProps = dispatch => ({
-    getAllIncomes: (data) => {
+    getAllIncomesEgress: (data) => {
         dispatch(actionGetAllIncomeEgress(data));
     }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListIncome);
+export default connect(mapStateToProps, mapDispatchToProps)(ListIncomeEgress);

@@ -4,6 +4,7 @@ import { GlobalPrimaryColor, GlobalSecondColor, GlobalStyles } from '../../Style
 import Icon from "react-native-vector-icons/Ionicons";
 import { connect } from "react-redux";
 import { actionUserSessionClose } from '../../redux/actions/AccountActions';
+import { Constants } from '../../Constants';
 
 class LoggedSideMenu extends Component {
     constructor(props) {
@@ -13,8 +14,8 @@ class LoggedSideMenu extends Component {
         }
     }
 
-    navigatePage = (sPage) => {
-        this.props.navigation.navigate(sPage);
+    navigatePage = (sPage, options = null) => {
+        this.props.navigation.navigate(sPage, options && options);
         this.props.navigation.closeDrawer()
     }
 
@@ -35,8 +36,8 @@ class LoggedSideMenu extends Component {
                     <OptionMenu press={() => this.navigatePage('Home')} icon="paper" title="Agenda" />
                     <OptionMenu press={() => this.navigatePage('ListCustomer')} icon="people" title="Clientes" />
                     <OptionMenu press={() => this.navigatePage('ListService')} icon="basket" title="Servicios" />
-                    <OptionMenu press={() => this.navigatePage('ListIncome')} icon="trending-up" title="Ingresos manuales" />
-                    <OptionMenu press={() => this.navigatePage('ListEgress')} icon="trending-down" title="Egresos manuales" />
+                    <OptionMenu press={() => this.navigatePage('ListIncome', { type: Constants.INCOME })} icon="trending-up" title="Ingresos manuales" />
+                    <OptionMenu press={() => this.navigatePage('ListEgress', { type: Constants.EGRESS })} icon="trending-down" title="Egresos manuales" />
                     <OptionMenu press={() => this.props.logout()} icon="log-in" title="Logout" />
                 </ScrollView>
             </View >

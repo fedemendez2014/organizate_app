@@ -5,19 +5,16 @@ import { createDrawerNavigator } from 'react-navigation-drawer';
 import Home from '../screens/home/Home';
 import LoggedSideMenu from './sidemenus/LoggedSideMenu';
 import { DrawerButton } from './sidemenus/DrawerButton';
-import { Image, TouchableOpacity, Text } from 'react-native';
 import ListCustomer from '../screens/customer/ListCustomer';
 import ListService from '../screens/service/ListService';
-import ListIncome from '../screens/income-egress/ListIncome';
-import ListEgress from '../screens/income-egress/ListEgress';
 import AddEditIncomeEgress from '../screens/income-egress/AddEditIncomeEgress';
-import Icon from 'react-native-vector-icons/Ionicons';
 import AddEditCustomer from '../screens/customer/AddEditCustomer';
 import AddEditService from '../screens/service/AddEditService';
 import { GlobalPrimaryColor, GlobalSecondColor } from '../Styles';
 import { OptionHeadButton, BackHeadButton } from '../components/shared/HeadButtons';
 import { Constants } from '../Constants';
 import AddEditReservation from '../screens/home/AddEditReservation';
+import ListIncomeEgress from '../screens/income-egress/ListIncomeEgress';
 
 const NavigationLogged = createStackNavigator(
     {
@@ -91,7 +88,7 @@ const NavigationLogged = createStackNavigator(
             }
         },
         ListIncome: {
-            screen: ListIncome,
+            screen: ListIncomeEgress,
             navigationOptions: ({ navigation }) => ({
                 headerRight: () =>
                     <OptionHeadButton press={() => navigation.navigate('AddEditIncomeEgress', { type: Constants.INCOME })}
@@ -100,7 +97,7 @@ const NavigationLogged = createStackNavigator(
             })
         },
         ListEgress: {
-            screen: ListEgress,
+            screen: ListIncomeEgress,
             navigationOptions: ({ navigation }) => ({
                 headerRight: () =>
                     <OptionHeadButton press={() => navigation.navigate('AddEditIncomeEgress', { type: Constants.EGRESS })}
