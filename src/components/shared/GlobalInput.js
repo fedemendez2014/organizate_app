@@ -10,9 +10,9 @@ export const GlobalInput = (props) => {
                 undefined !== props.title && "" !== props.value ?
                     <Text style={styles.textTitle}>{props.title}</Text> : null
             }
-            <TextInput style={[styles.textInput, props.center && styles.textCenter]}
+            <TextInput style={[styles.textInput, props.center && styles.textCenter, props.bold && styles.boldText]}
                 placeholder={props.ph} placeholderTextColor={GlobalSecondColor}
-                onChangeText={props.change} autoCapitalize="none"
+                onChangeText={props.change} autoCapitalize="none" editable={props.disabled ? false : true}
                 value={props.value} keyboardType={props.type && 'numeric'} />
         </View>
     );
@@ -86,6 +86,10 @@ const styles = StyleSheet.create(
         },
         textCenter: {
             textAlign: 'center'
+        },
+        boldText: {
+            fontWeight: 'bold',
+            fontSize: 16
         }
     });
 

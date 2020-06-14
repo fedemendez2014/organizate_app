@@ -74,7 +74,7 @@ const styles = StyleSheet.create(
             justifyContent: 'center', alignItems: 'center'
         },
         viewPicker: {
-            padding: 10, borderBottomColor: GlobalSecondColor,
+            borderBottomColor: GlobalSecondColor,
             borderBottomWidth: 0.5
         }
     });

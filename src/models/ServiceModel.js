@@ -4,11 +4,13 @@ export default class ServiceModel {
     description;
     price;
     observations;
+    duration;
     constructor() {
         this.id = 0;
         this.name = '';
         this.description = '';
         this.price = '';
         this.observations = '';
+        this.duration = '';
     }
 }

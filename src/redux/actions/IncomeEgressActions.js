@@ -1,5 +1,6 @@
 import { ActionsConstants } from '../../Constants';
 import { AddIncomeEgress, UpdateIncomeEgress, GetAllIncomeEgress } from '../services/IncomeEgressServices';
+import { actionUserSessionClose } from './AccountActions';
 
 /**
  * ADD INCOME EGRESS 
@@ -12,6 +13,9 @@ export const actionAddIncomeEgress = (data) => {
                 dispatch(actionAddIncomeEgressSuccess());
             },
             oError => {
+                if(oError.response.status === 401){
+                    dispatch(actionUserSessionClose());
+                }
                 dispatch(actionAddIncomeEgressError({
                     messageError: oError.response.data
                 }))
@@ -40,6 +44,9 @@ export const actionUpdateIncomeEgress = (data) => {
                 dispatch(actionUpdateIncomeEgressSuccess());
             },
             oError => {
+                if(oError.response.status === 401){
+                    dispatch(actionUserSessionClose());
+                }
                 dispatch(actionUpdateIncomeEgressError({
                     messageError: oError.response.data
                 }))
@@ -70,6 +77,9 @@ export const actionGetAllIncomeEgress = (data) => {
                 }))
             },
             oError => {
+                if(oError.response.status === 401){
+                    dispatch(actionUserSessionClose());
+                }
                 dispatch(actionGetAllIncomeEgressError({
                     messageError: oError.response.data
                 }))

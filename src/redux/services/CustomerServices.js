@@ -60,12 +60,15 @@ export const GetAllCustomer = (data) => {
         .then(oResult => oResult.data)
 }
 
-export const DeleteCustomer = (data) => {
-    let config = {
-        headers: {
-            Authorization: data.token,
+export const DeleteCustomer = async (data) => {
+    try {
+        let config = {
+            headers: {
+                Authorization: data.token,
+            }
         }
+        return await axios.delete(Constants.URLSERVICE + 'customer/' + data.id, config);
+    } catch (error) {
+        throw error;
     }
-    return axios.delete(Constants.URLSERVICE + 'customer/' + data.id, config)
-        .then(oResult => oResult.data)
 }

@@ -1,57 +1,49 @@
 import { ActionsConstants } from "../../Constants";
 
-const initalStateService = {
+const initialStateService = {
     statusUpdate: null,
     statusAdd: null,
     statusDelete: null,
-    messageError: ''
+    messageError: '',
+    loading: false
 };
 
-export const reducerService = (state = initalStateService, action) => {
+export const reducerService = (state = initialStateService, action) => {
     switch (action.type) {
+        case ActionsConstants.ACTIONS_SERVICE_LOADING:
+            return { ...initialStateService, loading: true };
         case ActionsConstants.ADD_SERVICE_SUCCESS:
-            return { ...initalStateService, statusAdd: true };
+            return { ...state, loading: false, statusAdd: true };
         case ActionsConstants.ADD_SERVICE_ERROR:
-            return { ...state, statusAdd: false, messageError: action.data.messageError };
+            return { ...state, loading: false, statusAdd: false, messageError: action.data.messageError };
         case ActionsConstants.UPDATE_SERVICE_SUCCESS:
-            return { ...initalStateService, statusUpdate: true };
+            return { ...state, loading: false, statusUpdate: true };
         case ActionsConstants.UPDATE_SERVICE_ERROR:
-            return { ...state, statusUpdate: false, messageError: action.data.messageError };
-        case ActionsConstants.GET_SERVICE_SUCCESS:
-            return { ...state, statusGet: true };
-        case ActionsConstants.GET_SERVICE_ERROR:
-            return { ...state, statusGet: false, messageError: action.data.messageError };
-        case ActionsConstants.GET_ALL_SERVICE_SUCCESS:
-            return { ...state, statusGetAll: true, services: action.data.services };
-        case ActionsConstants.GET_ALL_SERVICE_ERROR:
-            return { ...state, statusGetAll: false, messageError: action.data.messageError };
+            return { ...state, loading: false, statusUpdate: false, messageError: action.data.messageError };
         case ActionsConstants.DELETE_SERVICE_SUCCESS:
-            return { ...initalStateService, statusDelete: true }
+            return { ...state, loading: false, statusDelete: true }
         case ActionsConstants.DELETE_SERVICE_ERROR:
-            return { ...initalStateService, statusDelete: false, messageError: action.data.messageError }
+            return { ...state, loading: false, statusDelete: false, messageError: action.data.messageError }
         default:
             return state;
     }
 };
 
-const initalStateServiceGets = {
+const initialStateServiceGets = {
     services: [],
-    service: [],
-    statusGet: null,
-    statusGetAll: null,
-    messageError: ''
+    messageError: '',
+    loading: false,
+    pages: 0
 };
 
-export const reducerServiceGets = (state = initalStateServiceGets, action) => {
+export const reducerServiceGets = (state = initialStateServiceGets, action) => {
     switch (action.type) {
-        case ActionsConstants.GET_SERVICE_SUCCESS:
-            return { ...state, statusGet: true };
-        case ActionsConstants.GET_SERVICE_ERROR:
-            return { ...state, statusGet: false, messageError: action.data.messageError };
+        case ActionsConstants.GET_SERVICE_LOADING:
+            return { ...initialStateServiceGets, loading: true };
         case ActionsConstants.GET_ALL_SERVICE_SUCCESS:
-            return { ...state, statusGetAll: true, services: action.data.services };
+            return { ...state, loading: false, services: action.data.services.data, pages: action.data.services.count };
         case ActionsConstants.GET_ALL_SERVICE_ERROR:
-            return { ...state, statusGetAll: false, messageError: action.data.messageError };
+            return { ...state, loading: false, messageError: action.data.messageError };
         default:
             return state;
     }

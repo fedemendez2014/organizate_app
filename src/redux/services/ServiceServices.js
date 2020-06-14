@@ -10,13 +10,7 @@ export const AddService = (data) => {
             Authorization: data.token,
         }
     }
-    return axios.post(Constants.URLSERVICE + 'service',
-        {
-            name: data.name,
-            description: data.description,
-            price: data.price,
-            observations: data.observations
-        }, config)
+    return axios.post(Constants.URLSERVICE + 'service', data, config)
         .then(oResult => oResult.data)
 }
 
@@ -26,13 +20,7 @@ export const UpdateService = (data) => {
             Authorization: data.token,
         }
     }
-    return axios.put(Constants.URLSERVICE + 'service/' + data.id,
-        {
-            name: data.name,
-            description: data.description,
-            price: data.price,
-            observations: data.observations
-        }, config)
+    return axios.put(Constants.URLSERVICE + 'service/' + data.id, data, config)
         .then(oResult => oResult.data)
 }
 
@@ -62,6 +50,6 @@ export const DeleteService = (data) => {
             Authorization: data.token,
         }
     }
-    return axios.delete(Constants.URLSERVICE + 'service/' + data.serviceId, config)
+    return axios.delete(Constants.URLSERVICE + 'service/' + data.id, config)
         .then(oResult => oResult.data)
 }

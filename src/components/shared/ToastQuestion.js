@@ -14,7 +14,7 @@ export const ToastQuestion = (props) => (
                     style={styles.buttonCancel}>
                     <Text style={styles.textCancel}>Cancelar</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.buttonConfirm}>
+                <TouchableOpacity style={styles.buttonConfirm} onPress={props.pressConfirm}>
                     <Text style={styles.textConfirm}>Aceptar</Text>
                 </TouchableOpacity>
             </View>
@@ -51,6 +51,6 @@ const styles = StyleSheet.create({
     viewToast: {
         maxWidth: '90%', minWidth: '80%', minHeight: 50, padding: 20,
         backgroundColor: 'white', justifyContent: 'center', alignItems: 'center',
-        borderRadius: 5, borderColor: GlobalSecondColor, borderWidth: 1
+        borderRadius: 5, borderColor: GlobalSecondColor, borderWidth: 2
     },
 })

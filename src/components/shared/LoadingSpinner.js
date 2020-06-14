@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
         top: 0,
         bottom: 0,
         left: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.9)'
+        backgroundColor: 'rgba(0, 0, 0, 0.9)',
+        zIndex: 999
     }
 });

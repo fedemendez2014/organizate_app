@@ -1,5 +1,6 @@
 import { ActionsConstants } from '../../Constants';
 import { GetScheduleList } from '../services/ScheduleServices';
+import { actionUserSessionClose } from './AccountActions';
 
 /**
  * GET SCHEDULE LIST 
@@ -9,12 +10,14 @@ export const actionGetScheduleList = (data) => {
         const oResult = GetScheduleList(data);
         oResult.then(
             oSuccess => {
-                console.log(oSuccess)
                 dispatch(actionGetScheduleListSuccess({
                     scheduleList: oSuccess.data
                 }));
             },
             oError => {
+                if(oError.response.status === 401){
+                    dispatch(actionUserSessionClose());
+                }
                 dispatch(actionGetScheduleListError({
                     messageError: oError.response.data
                 }))

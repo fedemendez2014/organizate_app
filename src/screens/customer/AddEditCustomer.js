@@ -2,17 +2,20 @@ import React, { Component } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { GlobalInput } from '../../components/shared/GlobalInput';
 import { connect } from 'react-redux';
-import { actionAddCustomer } from '../../redux/actions/CustomerActions';
+import { actionAddCustomer, actionUpdateCustomer } from '../../redux/actions/CustomerActions';
 import CustomerModel from '../../models/CustomerModel';
 import { GlobalStyles } from '../../Styles';
 import { LogoBackground } from '../../components/shared/LogoBackground';
+import LoadingSpinner from '../../components/shared/LoadingSpinner';
+import ModalMessage from '../../components/shared/ModalMessage';
 
 class AddEditCustomer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            loading: false,
-            customer: new CustomerModel()
+            customer: new CustomerModel(),
+            messageModal: '',
+            statusModal: false
         }
     }
 
@@ -37,48 +40,84 @@ class AddEditCustomer extends Component {
         }
     }
 
-    addCustomer = async () => {
-        await this.setState({
-            loading: true
-        })
-        this.props.addCustomer({
-            ...this.state.customer,
-            token: this.props.propsLogin.session.account.remember_token
-        })
+    componentDidUpdate = async (prevProps) => {
+        if (prevProps.propsCustomer !== this.props.propsCustomer && null !== this.props.propsCustomer.statusAdd) {
+            if (this.props.propsCustomer.statusAdd) {
+                await this.setState({
+                    customer: new CustomerModel(),
+                    messageModal: 'Cliente agregado con éxito',
+                    statusModal: true
+                })
+            }
+            else {
+                await this.setState({
+                    messageModal: this.props.propsCustomer.messageError,
+                    statusModal: false
+                })
+            }
+        }
+        if (prevProps.propsCustomer !== this.props.propsCustomer && null !== this.props.propsCustomer.statusUpdate) {
+            if (this.props.propsCustomer.statusUpdate) {
+                await this.setState({
+                    messageModal: 'Cliente actualizado con éxito',
+                    statusModal: true
+                })
+            }
+            else {
+                await this.setState({
+                    messageModal: this.props.propsCustomer.messageError,
+                    statusModal: false
+                })
+            }
+        }
     }
 
-    updateCustomer = async () => {
-        await this.setState({
-            loading: true
-        })
-        this.props.updateCustomer({
-            ...this.state.customer,
-            token: this.props.propsLogin.session.account.remember_token
-        })
-    }
-
-    componentWillReceiveProps = async (nextProps) => {
-        if (nextProps.propsCustomer !== this.props.propsCustomer && null !== nextProps.propsCustomer.statusAdd
-            && nextProps.propsCustomer.statusAdd) {
+    closeModal = async () => {
+        if (!this.state.customer.id && this.state.statusModal) {
             await this.setState({
-                customer: new CustomerModel()
+                messageModal: '',
+                statusModal: false
             })
             this.props.navigation.navigate('ListCustomer')
         }
-        if (nextProps.propsCustomer !== this.props.propsCustomer && null !== nextProps.propsCustomer.statusUpdate
-            && nextProps.propsCustomer.statusUpdate) {
-            //SHOW TOAST SOLAMENTE
-        }
         await this.setState({
-            loading: false
+            messageModal: '',
+            statusModal: false
         })
+    }
+
+    addCustomer = async () => {
+        if (await this.validate()) {
+            this.props.addCustomer({
+                ...this.state.customer,
+                token: this.props.propsLogin.session.account.remember_token
+            })
+        }
+    }
+
+    updateCustomer = async () => {
+        if (await this.validate()) {
+            this.props.updateCustomer({
+                ...this.state.customer,
+                token: this.props.propsLogin.session.account.remember_token
+            })
+        }
+    }
+
+    validate = async () => {
+        await this.setState({ messageModal: '', statusModal: false });
+        if (!this.state.customer.name) {
+            await this.setState({ messageModal: 'El nombre del cliente es requerido', statusModal: false });
+            return false;
+        }
+        return true;
     }
 
     render() {
         return (
             <View style={GlobalStyles.ViewBackground}>
                 <LogoBackground />
-                <ScrollView style={{padding: 10}}>
+                <ScrollView style={{ padding: 10 }}>
                     <GlobalInput ph="Nombre" value={this.state.customer.name} title="Nombre"
                         change={text => this.setState({ customer: { ...this.state.customer, name: text } })} />
                     <GlobalInput ph="Email" value={this.state.customer.email} title="Email"
@@ -92,7 +131,10 @@ class AddEditCustomer extends Component {
                     <GlobalInput ph="Observaciones" value={this.state.customer.observations} title="Observaciones"
                         change={text => this.setState({ customer: { ...this.state.customer, observations: text } })} />
                 </ScrollView>
-            </View>
+                <LoadingSpinner visible={this.props.propsCustomer.loading} />
+                <ModalMessage message={this.state.messageModal} status={this.state.statusModal}
+                    buttonText="Cerrar" press={this.closeModal} />
+            </View >
         )
     }
 }
