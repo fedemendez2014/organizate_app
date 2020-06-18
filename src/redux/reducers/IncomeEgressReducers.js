@@ -3,22 +3,21 @@ import { combineReducers } from 'redux';
 
 const initalStateIncomeEgressGets = {
     objects: [],
-    object: [],
     statusGet: null,
     statusGetAll: null,
-    messageError: ''
+    messageError: '',
+    pages: 0,
+    loading: false
 };
 
 export const reducerIncomeEgressGets = (state = initalStateIncomeEgressGets, action) => {
     switch (action.type) {
-        case ActionsConstants.GET_INCOME_EGRESS_SUCCESS:
-            return { ...initalStateIncomeEgress, statusGet: true };
-        case ActionsConstants.GET_INCOME_EGRESS_ERROR:
-            return { ...initalStateIncomeEgress, statusGet: false, messageError: action.data.messageError };
+        case ActionsConstants.GET_INCOME_EGRESS_LOADING:
+            return { ...initalStateIncomeEgressGets, loading: true };
         case ActionsConstants.GET_ALL_INCOME_EGRESS_SUCCESS:
-            return { ...initalStateIncomeEgress, statusGetAll: true, objects: action.data.objects };
+            return { ...state, loading: false, statusGetAll: true, objects: action.data.objects, pages: action.data.count };
         case ActionsConstants.GET_ALL_INCOME_EGRESS_ERROR:
-            return { ...initalStateIncomeEgress, statusGetAll: false, messageError: action.data.messageError };
+            return { ...state, loading: false, statusGetAll: false, messageError: action.data.messageError };
         default:
             return state;
     }
@@ -27,25 +26,27 @@ export const reducerIncomeEgressGets = (state = initalStateIncomeEgressGets, act
 const initalStateIncomeEgress = {
     statusUpdate: null,
     statusAdd: null,
-    statusGet: null,
     statusDelete: null,
-    messageError: ''
+    messageError: '',
+    loading: false
 };
 
 export const reducerIncomeEgress = (state = initalStateIncomeEgress, action) => {
     switch (action.type) {
+        case ActionsConstants.ACTIONS_INCOME_EGRESS_LOADING:
+            return { ...initalStateIncomeEgress, loading: true };
         case ActionsConstants.ADD_INCOME_EGRESS_SUCCESS:
-            return { ...state, statusAdd: true };
+            return { ...state, loading: false, statusAdd: true };
         case ActionsConstants.ADD_INCOME_EGRESS_ERROR:
-            return { ...state, statusAdd: false, messageError: action.data.messageError };
+            return { ...state, loading: false, statusAdd: false, messageError: action.data.messageError };
         case ActionsConstants.UPDATE_INCOME_EGRESS_SUCCESS:
-            return { ...state, statusUpdate: true };
+            return { ...state, loading: false, statusUpdate: true };
         case ActionsConstants.UPDATE_INCOME_EGRESS_ERROR:
-            return { ...state, statusUpdate: false, messageError: action.data.messageError };
+            return { ...state, loading: false, statusUpdate: false, messageError: action.data.messageError };
         case ActionsConstants.DELETE_INCOME_EGRESS_SUCCESS:
-            return { ...state, statusDelete: true }
+            return { ...state, loading: false, statusDelete: true }
         case ActionsConstants.DELETE_INCOME_EGRESS_ERROR:
-            return { ...state, statusDelete: false, messageError: action.data.messageError }
+            return { ...state, loading: false, statusDelete: false, messageError: action.data.messageError }
         default:
             return state;
     }

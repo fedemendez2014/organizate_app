@@ -7,13 +7,14 @@ import { actionUserSessionClose } from './AccountActions';
  */
 export const actionAddIncomeEgress = (data) => {
     return dispatch => {
+        dispatch(actionActionsIncomeEgressLoading());
         const oResult = AddIncomeEgress(data);
         oResult.then(
             oSuccess => {
                 dispatch(actionAddIncomeEgressSuccess());
             },
             oError => {
-                if(oError.response.status === 401){
+                if (oError.response.status === 401) {
                     dispatch(actionUserSessionClose());
                 }
                 dispatch(actionAddIncomeEgressError({
@@ -38,13 +39,14 @@ export const actionAddIncomeEgressError = (data) => ({
  */
 export const actionUpdateIncomeEgress = (data) => {
     return dispatch => {
+        dispatch(actionActionsIncomeEgressLoading());
         const oResult = UpdateIncomeEgress(data);
         oResult.then(
             oSuccess => {
                 dispatch(actionUpdateIncomeEgressSuccess());
             },
             oError => {
-                if(oError.response.status === 401){
+                if (oError.response.status === 401) {
                     dispatch(actionUserSessionClose());
                 }
                 dispatch(actionUpdateIncomeEgressError({
@@ -69,15 +71,17 @@ export const actionUpdateIncomeEgressError = (data) => ({
  */
 export const actionGetAllIncomeEgress = (data) => {
     return dispatch => {
+        dispatch(actionGetAllIncomeEgressLoading());
         const oResult = GetAllIncomeEgress(data);
         oResult.then(
             oSuccess => {
                 dispatch(actionGetAllIncomeEgressSuccess({
-                    objects: oSuccess.data.data
+                    objects: oSuccess.data.data,
+                    count: oSuccess.data.count
                 }))
             },
             oError => {
-                if(oError.response.status === 401){
+                if (oError.response.status === 401) {
                     dispatch(actionUserSessionClose());
                 }
                 dispatch(actionGetAllIncomeEgressError({
@@ -88,6 +92,10 @@ export const actionGetAllIncomeEgress = (data) => {
     }
 }
 
+export const actionGetAllIncomeEgressLoading = () => ({
+    type: ActionsConstants.GET_INCOME_EGRESS_LOADING
+})
+
 export const actionGetAllIncomeEgressSuccess = (data) => ({
     type: ActionsConstants.GET_ALL_INCOME_EGRESS_SUCCESS,
     data: data
@@ -96,4 +104,11 @@ export const actionGetAllIncomeEgressSuccess = (data) => ({
 export const actionGetAllIncomeEgressError = (data) => ({
     type: ActionsConstants.GET_ALL_INCOME_EGRESS_ERROR,
     data: data
+})
+
+/**
+ * GLOBAL CUSTOMER ACTIONS
+ */
+export const actionActionsIncomeEgressLoading = () => ({
+    type: ActionsConstants.ACTIONS_INCOME_EGRESS_LOADING
 })
