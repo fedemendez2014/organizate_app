@@ -12,13 +12,13 @@ export class GlobalDatePicker extends Component {
     render() {
         return (
             <View style={[styles.viewPicker,
-                this.props.hiddenBorder && { borderBottomWidth: 0, paddingBottom: 5 }]}>
+            this.props.hiddenBorder && { borderBottomWidth: 0, paddingBottom: 5 }]}>
                 <Text style={styles.textTitle}>{this.props.title}</Text>
                 <View style={styles.comboSelect}>
                     <TouchableOpacity
-                        onPress={() => this.refs.datePicker.onPressDate()} style={{ flexDirection: 'row' }}
-                        style={styles.touchable}>
-                        <Text style={styles.textValue}>
+                        onPress={() => this.refs.datePicker.onPressDate()}
+                        style={[styles.touchable, this.props.align && { justifyContent: this.props.align, paddingStart: 10 }]}>
+                        <Text style={[styles.textValue, this.props.bold && { fontWeight: 'normal' }]}>
                             {
                                 this.props.time ?
                                     this.props.time.format("hh:mm A")

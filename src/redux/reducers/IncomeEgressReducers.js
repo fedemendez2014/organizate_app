@@ -1,7 +1,7 @@
 import { ActionsConstants } from "../../Constants";
 import { combineReducers } from 'redux';
 
-const initalStateIncomeEgressGets = {
+const initialStateIncomeEgressGets = {
     objects: [],
     statusGet: null,
     statusGetAll: null,
@@ -10,10 +10,10 @@ const initalStateIncomeEgressGets = {
     loading: false
 };
 
-export const reducerIncomeEgressGets = (state = initalStateIncomeEgressGets, action) => {
+export const reducerIncomeEgressGets = (state = initialStateIncomeEgressGets, action) => {
     switch (action.type) {
         case ActionsConstants.GET_INCOME_EGRESS_LOADING:
-            return { ...initalStateIncomeEgressGets, loading: true };
+            return { ...initialStateIncomeEgressGets, loading: true };
         case ActionsConstants.GET_ALL_INCOME_EGRESS_SUCCESS:
             return { ...state, loading: false, statusGetAll: true, objects: action.data.objects, pages: action.data.count };
         case ActionsConstants.GET_ALL_INCOME_EGRESS_ERROR:
@@ -23,7 +23,7 @@ export const reducerIncomeEgressGets = (state = initalStateIncomeEgressGets, act
     }
 };
 
-const initalStateIncomeEgress = {
+const initialStateIncomeEgress = {
     statusUpdate: null,
     statusAdd: null,
     statusDelete: null,
@@ -31,10 +31,10 @@ const initalStateIncomeEgress = {
     loading: false
 };
 
-export const reducerIncomeEgress = (state = initalStateIncomeEgress, action) => {
+export const reducerIncomeEgress = (state = initialStateIncomeEgress, action) => {
     switch (action.type) {
         case ActionsConstants.ACTIONS_INCOME_EGRESS_LOADING:
-            return { ...initalStateIncomeEgress, loading: true };
+            return { ...initialStateIncomeEgress, loading: true };
         case ActionsConstants.ADD_INCOME_EGRESS_SUCCESS:
             return { ...state, loading: false, statusAdd: true };
         case ActionsConstants.ADD_INCOME_EGRESS_ERROR:

@@ -52,7 +52,7 @@ export const GetAllIncomeEgress = (data) => {
             Authorization: data.token,
         }
     }
-    return axios.get(Constants.URLSERVICE + 'incomeEgress/all/' + data.page + '/' + data.type, config)
+    return axios.get(`${Constants.URLSERVICE}incomeEgress/all/${data.page}/${data.type}?search=${data.search}`, config)
         .then(oResult => oResult.data)
 }
 
@@ -62,6 +62,6 @@ export const DeleteIncomeEgress = (data) => {
             Authorization: data.token,
         }
     }
-    return axios.delete(Constants.URLSERVICE + 'incomeEgress/' + data.id, config)
+    return axios.delete(`${Constants.URLSERVICE}incomeEgress/${data.id}`, config)
         .then(oResult => oResult.data)
 }

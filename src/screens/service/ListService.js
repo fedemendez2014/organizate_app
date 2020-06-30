@@ -44,10 +44,12 @@ class ListService extends Component {
         }
     }
 
-    getAllServices = () => {
+    getAllServices = (loading = true) => {
         this.props.getAllServices({
             token: this.props.propsLogin.session.account.remember_token,
-            page: this.state.page
+            page: this.state.page,
+            search: this.state.search,
+            loading: loading
         });
     }
 
@@ -76,12 +78,17 @@ class ListService extends Component {
         this.setState({ deleteSelect: null });
     }
 
+    search = async (text) => {
+        await this.setState({ search: text });
+        this.getAllServices(false);
+    }
+
     render() {
         return (
             <View style={GlobalStyles.ViewBackground}>
                 <LogoBackground />
                 <View style={{ padding: 10, flex: 1 }}>
-                    <GlobalInputSearch change={text => this.setState({ search: text })}
+                    <GlobalInputSearch change={text => this.search(text)}
                         value={this.state.search} />
                     <ScrollView style={GlobalStyles.scrollViewHeight} refreshControl={
                         <RefreshControl refreshing={false} onRefresh={this.onRefresh}

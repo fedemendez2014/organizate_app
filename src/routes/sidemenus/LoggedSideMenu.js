@@ -34,10 +34,13 @@ class LoggedSideMenu extends Component {
                     </Text>
                     </View>
                     <OptionMenu press={() => this.navigatePage('Home')} icon="paper" title="Agenda" />
+                    <OptionMenu press={() => this.navigatePage('ListService')} icon="notifications" title="Notificaciones" />
                     <OptionMenu press={() => this.navigatePage('ListCustomer')} icon="people" title="Clientes" />
                     <OptionMenu press={() => this.navigatePage('ListService')} icon="basket" title="Servicios" />
                     <OptionMenu press={() => this.navigatePage('ListIncome', { type: Constants.INCOME })} icon="trending-up" title="Ingresos manuales" />
                     <OptionMenu press={() => this.navigatePage('ListEgress', { type: Constants.EGRESS })} icon="trending-down" title="Egresos manuales" />
+                    <OptionMenu press={() => this.navigatePage('ListService')} icon="stats" title="Reportes" />
+                    <OptionMenu press={() => this.navigatePage('ListService')} icon="settings" title="Configuración" />
                     <OptionMenu press={() => this.props.logout()} icon="log-in" title="Logout" />
                 </ScrollView>
             </View >

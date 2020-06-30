@@ -1,3 +1,5 @@
+import moment from "moment/min/moment-with-locales";
+
 export default class IncomeEgressModel {
     id;
     reason;
@@ -9,6 +11,6 @@ export default class IncomeEgressModel {
         this.reason = '';
         this.amount = '';
         this.type = '';
-        this.date = '';
+        this.date = moment();
     }
 }

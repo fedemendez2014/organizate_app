@@ -25,11 +25,13 @@ class ListIncomeEgress extends Component {
         this.getAllIncomesEgress();
     }
 
-    getAllIncomesEgress = () => {
+    getAllIncomesEgress = (loading = true) => {
         this.props.getAllIncomesEgress({
             token: this.props.propsLogin.session.account.remember_token,
             page: this.state.page,
-            type: this.props.navigation.getParam('type', null)
+            type: this.props.navigation.getParam('type', null),
+            search: this.state.search,
+            loading: loading
         })
     }
 
@@ -47,15 +49,20 @@ class ListIncomeEgress extends Component {
         this.getAllIncomesEgress();
     }
 
+    search = async (text) => {
+        await this.setState({ search: text });
+        this.getAllIncomesEgress(false);
+    }
+
     render() {
         return (
             <View style={GlobalStyles.ViewBackground}>
                 <LogoBackground />
                 <View style={{ padding: 10, flex: 1 }}>
-                    <GlobalInputSearch change={text => this.setState({ search: text })}
+                    <GlobalInputSearch change={text => this.search(text)}
                         value={this.state.search} />
                     <ScrollView style={GlobalStyles.scrollViewHeight} refreshControl={
-                        <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh}
+                        <RefreshControl refreshing={false} onRefresh={this.onRefresh}
                             tintColor={GlobalSecondColor} title="Pull to refresh..."
                             titleColor={GlobalSecondColor} />} >
                         {

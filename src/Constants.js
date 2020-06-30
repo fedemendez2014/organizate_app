@@ -1,8 +1,8 @@
 const URLPRODUCCION = 'http://staging.sayasoftware.com/organizate_api/';
-const URLTESTING = 'http://192.168.1.7/organizate_api/';
+const URLTESTING = 'http://localhost/organizate_api/';
 
 export const Constants = {
-    URLSERVICE: URLPRODUCCION,
+    URLSERVICE: URLTESTING,
     INCOME: 1,
     EGRESS: 2
 };

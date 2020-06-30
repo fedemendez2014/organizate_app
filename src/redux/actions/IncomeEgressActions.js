@@ -18,7 +18,7 @@ export const actionAddIncomeEgress = (data) => {
                     dispatch(actionUserSessionClose());
                 }
                 dispatch(actionAddIncomeEgressError({
-                    messageError: oError.response.data
+                    messageError: oError.response.data.message
                 }))
             }
         )
@@ -71,7 +71,9 @@ export const actionUpdateIncomeEgressError = (data) => ({
  */
 export const actionGetAllIncomeEgress = (data) => {
     return dispatch => {
-        dispatch(actionGetAllIncomeEgressLoading());
+        if (data.loading) {
+            dispatch(actionGetAllIncomeEgressLoading());
+        }
         const oResult = GetAllIncomeEgress(data);
         oResult.then(
             oSuccess => {

@@ -80,7 +80,9 @@ export const actionUpdateCustomerError = (data) => ({
  */
 export const actionGetAllCustomer = (data) => {
     return dispatch => {
-        dispatch(actionGetAllCustomerLoading());
+        if (data.loading) {
+            dispatch(actionGetAllCustomerLoading());
+        }
         const oResult = GetAllCustomer(data);
         oResult.then(
             oSuccess => {

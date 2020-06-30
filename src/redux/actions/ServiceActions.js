@@ -79,7 +79,9 @@ export const actionUpdateServiceError = (data) => ({
  */
 export const actionGetAllService = (data) => {
     return dispatch => {
-        dispatch(actionGetAllServiceLoading());
+        if (data.loading) {
+            dispatch(actionGetAllServiceLoading());
+        }
         const oResult = GetAllService(data);
         oResult.then(
             oSuccess => {

@@ -56,7 +56,7 @@ export const GetAllCustomer = (data) => {
             Authorization: data.token,
         }
     }
-    return axios.get(Constants.URLSERVICE + 'customer/all/' + data.page, config)
+    return axios.get(`${Constants.URLSERVICE}customer/all/${data.page}?search=${data.search}`, config)
         .then(oResult => oResult.data)
 }
 
